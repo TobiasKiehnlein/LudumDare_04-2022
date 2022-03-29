@@ -29,6 +29,7 @@ jobs:
         with:
           targetPlatform: WebGL
           projectPath: ./LudumDare-04-2022
+          customImage: unityci/editor:2021.2.17f1-base-1.0.0
       - uses: actions/upload-artifact@v2
         with:
           name: Build
