@@ -12,6 +12,15 @@ jobs:
         targetPlatform:
           - WebGL # WebGL.
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: LudumDare-04-2022/Library
+          key: Library-LudumDare-04-2022-WebGL
+          restore-keys: |
+            Library-LudumDare-04-2022-
+            Library-
+      - run: ls -lha
+      - run: cd LudumDare-04-2022; ls -lha
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
