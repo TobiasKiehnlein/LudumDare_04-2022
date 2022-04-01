@@ -33,4 +33,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Build-${{ matrix.targetPlatform }}
-          path: LudumDare-04-2022/build/${{ matrix.targetPlatform }}
+          path: /github/workspace/build/${{ matrix.targetPlatform }}
