@@ -2,6 +2,10 @@ name: Build project
 
 on: [push, pull_request]
 
+env:
+  ITCH_USERNAME: tobiaskiehnlein
+  ITCH_GAME_ID: ldjam-04-2022
+
 jobs:
   skip_job:
     name: Skip outdated actions
@@ -22,13 +26,14 @@ jobs:
   buildForAllSupportedPlatforms:
     needs: skip_job
     if: ${{ needs.skip_job.outputs.should_skip != 'true' }}
-    name: Build for ${{ matrix.targetPlatform }}
+    name: Build for ${{ matrix.platform.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        targetPlatform:
-          - WebGL
+        platform:
+          - targetPlatform: WebGL
+            image: webgl
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
@@ -38,20 +43,46 @@ jobs:
         uses: actions/cache@v3
         with:
           path: LudumDare-04-2022/Library
-          key: Library-LudumDare-04-2022-${{ matrix.targetPlatform }}
-      - name: Build for ${{ matrix.targetPlatform }}
+          key: Library-LudumDare-04-2022-${{ matrix.platform.targetPlatform }}
+      - name: Build for ${{ matrix.platform.targetPlatform }}
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: ${{ matrix.targetPlatform }}
+          targetPlatform: ${{ matrix.platform.targetPlatform }}
           projectPath: ./LudumDare-04-2022
-          customImage: unityci/editor:2021.2.17f1-webgl-1.0.0
-      - name: Upload ${{ matrix.targetPlatform }}
+          customImage: unityci/editor:2021.2.17f1-${{ matrix.platform.image }}-1.0.0
+      - name: Upload ${{ matrix.platform.targetPlatform }}
         uses: actions/upload-artifact@v2
         with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          name: Build-${{ matrix.platform.targetPlatform }}
+          path: build/${{ matrix.platform.targetPlatform }}
           if-no-files-found: error
+  deploy:
+    name: Upload to Itch
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        channel:
+          # - deploymentPlatform: windows
+          #   targetPlatform: Windows
+          - deploymentPlatform: webgl
+            targetPlatform: WebGL # name of the target platform in the build job
+    runs-on: ubuntu-latest
+    name: Deploy - Itch.io ${{ matrix.channel.targetPlatform }}
+    steps:
+      - uses: actions/download-artifact@v2.0.8
+        with:
+          name: Build-${{ matrix.channel.targetPlatform }}
+          path: build/${{ matrix.channel.targetPlatform }}
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          gameData: ./build/${{ matrix.channel.targetPlatform }}
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{ env.ITCH_GAME_ID }}
+          buildChannel: ${{ matrix.channel.deploymentPlatform }}
+          buildNumber: ${{ needs.version.outputs.version_hash }}
