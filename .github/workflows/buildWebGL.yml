@@ -29,7 +29,7 @@ jobs:
     name: Build for ${{ matrix.platform.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         platform:
           - targetPlatform: WebGL
@@ -43,7 +43,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: LudumDare-04-2022/Library
-          key: Library-LudumDare-04-2022-${{ matrix.platform.targetPlatform }}
+          key: LudumDare-04-2022-Library-${{ runner.os }}-${{ matrix.platform.targetPlatform }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            LudumDare-04-2022-Library-${{ runner.os }}-${{ matrix.platform.targetPlatform }}-${{ github.ref_name }}-
+            LudumDare-04-2022-Library-${{ runner.os }}-${{ matrix.platform.targetPlatform }}-
+            LudumDare-04-2022-Library-${{ runner.os }}-
       - name: Build for ${{ matrix.platform.targetPlatform }}
         uses: game-ci/unity-builder@v2
         env:
