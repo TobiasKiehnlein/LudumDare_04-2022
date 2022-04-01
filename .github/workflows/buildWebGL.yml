@@ -3,7 +3,23 @@ name: Build project
 on: [push, pull_request]
 
 jobs:
+  skip_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          concurrent_skipping: "same_content"
+          skip_after_successful_duplicate: "true"
+          cancel_others: "true"
+          paths_ignore: '["**/README.md"]'
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+
   buildForAllSupportedPlatforms:
+    needs: skip_job
+    if: ${{ needs.skip_job.outputs.should_skip != 'true' }}
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -34,19 +50,6 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: ./LudumDare-04-2022
           customImage: unityci/editor:2021.2.17f1-webgl-1.0.0
-      - name: Check build directory
-        shell: bash
-        run: |
-          ls -l  /github/workspace/ || echo 0
-          ls -l  /github/workspace/build/ || echo 0
-          ls -l  /github/workspace/build/WebGL/ || echo 0
-          ls -l  ${{ github.workspace }}
-          ls -l  build/ || echo 0
-          ls -l  build/WebGL/ || echo 0
-          ls -l  LudumDare-04-2022/ || echo 0
-          ls -l  LudumDare-04-2022/build || echo 0
-          ls -l  LudumDare-04-2022/WebGL/ || echo 0
-          ls -l  LudumDare-04-2022/WebGL/build/ || echo 0
       - name: Upload ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v2
         with:
