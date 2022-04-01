@@ -35,9 +35,9 @@ jobs:
           - targetPlatform: WebGL
             image: webgl
           - targetPlatform: StandaloneLinux64
-            image: linux-il2cpp
+            image: linux-mono
           - targetPlatform: StandaloneWindows64
-            image: windows-il2cpp
+            image: windows-mono
           - targetPlatform: StandaloneOSX
             image: mac-mono
 
