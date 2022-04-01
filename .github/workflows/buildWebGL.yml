@@ -35,13 +35,13 @@ jobs:
       - name: Check build directory
         shell: bash
         run: |
-          ls /github/workspace/ || True
-          ls /github/workspace/build/ || True
-          ls /github/workspace/build/WebGL/ || True
-          ls build/ || True
-          ls build/WebGL/ || True
-          ls LudumDare-04-2022/ || True
-          ls LudumDare-04-2022/build || True
+          ls /github/workspace/ || echo 0
+          ls /github/workspace/build/ || echo 0
+          ls /github/workspace/build/WebGL/ || echo 0
+          ls build/ || echo 0
+          ls build/WebGL/ || echo 0
+          ls LudumDare-04-2022/ || echo 0
+          ls LudumDare-04-2022/build || echo 0
       - name: Upload ${{ matrix.targetPlatform }}
         uses: actions/upload-artifact@v2
         with:
