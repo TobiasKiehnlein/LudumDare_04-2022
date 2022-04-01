@@ -4,11 +4,13 @@ on: [push, pull_request]
 
 jobs:
   skip_job:
+    name: Skip outdated actions
     runs-on: ubuntu-latest
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
       - id: skip_check
+        name: Cancel others / Check if self should be skipped
         uses: fkirc/skip-duplicate-actions@master
         with:
           concurrent_skipping: "same_content"
