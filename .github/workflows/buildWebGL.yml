@@ -35,13 +35,10 @@ jobs:
         with:
           lfs: true
       - name: Set up cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: LudumDare-04-2022/Library
-          key: Library-LudumDare-04-2022-WebGL
-          restore-keys: |
-            Library-LudumDare-04-2022-
-            Library-
+          key: Library-LudumDare-04-2022-${{ matrix.targetPlatform }}
       - name: Build for ${{ matrix.targetPlatform }}
         uses: game-ci/unity-builder@v2
         env:
@@ -56,5 +53,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Build-${{ matrix.targetPlatform }}
-          path: ${{ github.workspace }}/build/${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
           if-no-files-found: error
