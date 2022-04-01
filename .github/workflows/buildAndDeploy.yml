@@ -34,6 +34,13 @@ jobs:
         platform:
           - targetPlatform: WebGL
             image: webgl
+          - targetPlatform: StandaloneLinux64
+            image: linux-il2cpp
+          - targetPlatform: StandaloneWindows64
+            image: windows-il2cpp
+          - targetPlatform: StandaloneOSX
+            image: mac-mono
+
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
@@ -58,7 +65,7 @@ jobs:
           targetPlatform: ${{ matrix.platform.targetPlatform }}
           projectPath: ./LudumDare-04-2022
           customImage: unityci/editor:2021.2.17f1-${{ matrix.platform.image }}-1.0.0
-      - name: Upload ${{ matrix.platform.targetPlatform }}
+      - name: Upload artifacts for ${{ matrix.platform.targetPlatform }}
         uses: actions/upload-artifact@v2
         with:
           name: Build-${{ matrix.platform.targetPlatform }}
@@ -72,10 +79,14 @@ jobs:
       fail-fast: true
       matrix:
         channel:
-          # - deploymentPlatform: windows
-          #   targetPlatform: Windows
           - deploymentPlatform: webgl
             targetPlatform: WebGL # name of the target platform in the build job
+          - deploymentPlatform: linux
+            targetPlatform: StandaloneLinux64
+          - deploymentPlatform: windows
+            targetPlatform: StandaloneWindows64
+          - deploymentPlatform: mac
+            targetPlatform: StandaloneOSX
     steps:
       - uses: actions/download-artifact@v2.0.8
         with:
