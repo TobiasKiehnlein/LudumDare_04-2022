@@ -10,10 +10,12 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - WebGL # WebGL.
+          - WebGL
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
+        with:
+          lfs: true
       - name: Set up cache
         uses: actions/cache@v2
         with:
@@ -29,9 +31,9 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: WebGL
+          targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: ./LudumDare-04-2022
-          customImage: unityci/editor:2021.2.17f1-base-1.0.0
+          customImage: unityci/editor:2021.2.17f1-webgl-1.0.0
       - name: Check build directory
         shell: bash
         run: |
