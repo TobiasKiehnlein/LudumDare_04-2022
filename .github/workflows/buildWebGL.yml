@@ -62,6 +62,7 @@ jobs:
           if-no-files-found: error
   deploy:
     name: Deploy - Itch.io ${{ matrix.channel.targetPlatform }}
+    needs: buildForAllSupportedPlatforms
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
