@@ -61,7 +61,7 @@ jobs:
           path: build/${{ matrix.platform.targetPlatform }}
           if-no-files-found: error
   deploy:
-    name: Upload to Itch
+    name: Deploy - Itch.io ${{ matrix.channel.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -71,8 +71,6 @@ jobs:
           #   targetPlatform: Windows
           - deploymentPlatform: webgl
             targetPlatform: WebGL # name of the target platform in the build job
-    runs-on: ubuntu-latest
-    name: Deploy - Itch.io ${{ matrix.channel.targetPlatform }}
     steps:
       - uses: actions/download-artifact@v2.0.8
         with:
