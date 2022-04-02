@@ -13,7 +13,7 @@ namespace EntitySystem
 
         private const int MaxHitcount = 5;
         private const float MinMoveDistance = 0.0f; // Per update and iteration
-        private const float MaxMoveDistance = 5.000f; // Per update and iteration
+        private const float MaxMoveDistance = 100.000f; // Per update and iteration
 
         public Vector2 Direction
         {
@@ -41,15 +41,14 @@ namespace EntitySystem
         {
             float distance; // The distance to move in this frame
             float hitDeltaTime = 0; // The time at which the Wall is hit
-            Vector2 translation = Vector2.zero;
             RaycastHit2D? lastHit = null;
             int hitcount = 0;
             while (hitcount <= MaxHitcount)
             {
                 distance = Speed * (Time.deltaTime - hitDeltaTime);
                 distance = Math.Clamp(distance, MinMoveDistance, MaxMoveDistance);
-                Debug.DrawRay(gameObject.transform.position, Direction * distance, Color.green);
-                var hits = Physics2D.RaycastAll(gameObject.transform.position, Direction, distance + wallCollisionDistance, Wall.WallMask);
+                Debug.DrawRay(gameObject.transform.position, Direction * distance, Color.green, 60);
+                var hits = Physics2D.CircleCastAll(gameObject.transform.position, wallCollisionDistance, Direction, distance, Wall.WallMask);
                 RaycastHit2D? confirmedHit = null;
                 if (hits.Length > 0) // We have hit a Wall, but it might be the same from the last iteration
                 {
@@ -69,10 +68,9 @@ namespace EntitySystem
 
                 if (confirmedHit is { } hit)
                 {
-                    Debug.DrawRay(hit.point, hit.normal * 10, Color.red);
+                    Debug.DrawRay(hit.point, hit.normal * 10, Color.red, 60);
                     var actualHitDistance = hit.distance - wallCollisionDistance;
-                    translation +=
-                        Direction * actualHitDistance; // Important: actualHitDistance, not distance -> otherwise entity will move too far
+                    this.gameObject.transform.Translate(Direction * actualHitDistance); // Important: actualHitDistance, not distance -> otherwise entity will move too far
                     hitDeltaTime += actualHitDistance / Speed;
                     Direction = Vector2.Reflect(Direction, hit.normal);
                     var wall = hit.collider.gameObject.GetComponentInChildren<Wall>();
@@ -92,7 +90,7 @@ namespace EntitySystem
                 }
                 else
                 {
-                    translation = translation + Direction * distance;
+                    this.gameObject.transform.Translate(Direction * distance);
                     break;
                 }
             }
@@ -101,8 +99,6 @@ namespace EntitySystem
             {
                 Debug.LogWarning($"Entity {this.gameObject.name}: hitcount in one update > {MaxHitcount}");
             }
-
-            this.gameObject.transform.Translate(translation);
         }
 
         protected override void Start()
