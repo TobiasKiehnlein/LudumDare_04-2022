@@ -22,7 +22,6 @@ namespace Utils
             crossFade.SetTrigger("Start");
             await Task.Delay(1000);
             SceneManager.LoadScene(sceneIndex);
-            crossFade.SetTrigger("Stop");
         }
 
         public void LoadMenuScene()
