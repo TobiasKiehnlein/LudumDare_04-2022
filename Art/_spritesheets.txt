@@ -1,0 +1,1 @@
+death_side_front.png,2000,2000,10
