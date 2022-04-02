@@ -5,14 +5,22 @@ namespace WallSystem
 {
     public abstract class Wall: MonoBehaviour
     {
-        public static int WallMask { get; private set; }
-
-        static Wall()
+        public static int WallMask
         {
-            string[] wallLayers = {"Wall"};
-            WallMask = LayerMask.GetMask(wallLayers);
+            get
+            {
+                if (_wallMask < 0)
+                {
+                    string[] wallLayers = {"Wall"};
+                    _wallMask = LayerMask.GetMask(wallLayers);
+                }
+
+                return _wallMask;
+            }
         }
-        
+
+        private static int _wallMask = -1;
+
         public abstract void Hit(Entity e);
     }
 }

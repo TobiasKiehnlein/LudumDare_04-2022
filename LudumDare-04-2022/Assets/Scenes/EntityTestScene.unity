@@ -190,6 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 281984873}
   - component: {fileID: 281984874}
+  - component: {fileID: 281984875}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -229,13 +230,27 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -6.9115434, y: -0.09013796}
-  - {x: 0.009116501, y: -7.1015253}
-  - {x: 7.1647205, y: -0.051609516}
+  - {x: -164.21301, y: 23.119328}
+  - {x: 0.566983, y: -141.30325}
+  - {x: 141.45158, y: 0.1241951}
+  - {x: -0.2388916, y: 140.18423}
+  - {x: -167.16449, y: -24.650127}
   m_AdjacentStartPoint: {x: 0, y: 7}
   m_AdjacentEndPoint: {x: 0, y: 7}
-  m_UseAdjacentStartPoint: 1
-  m_UseAdjacentEndPoint: 1
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
+--- !u!114 &281984875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281984872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4de11022a334af4a054937fa7d09a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &352174697
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +717,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 74.94
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -726,7 +741,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: -17, z: -10}
+  m_LocalPosition: {x: 0, y: -128.4, z: -74.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -760,7 +775,7 @@ Transform:
   m_GameObject: {fileID: 1021934081}
   m_LocalRotation: {x: -0.27059805, y: -0.6532815, z: 0.6532815, w: 0.27059805}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 20, y: 1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 281984873}
@@ -1198,6 +1213,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8032117263406555127, guid: 3ad7b3b5a9a4c4645bae1b00ccd7501d, type: 3}
+      propertyPath: startingSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032117263406555127, guid: 3ad7b3b5a9a4c4645bae1b00ccd7501d, type: 3}
+      propertyPath: startingDirection.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032117263406555127, guid: 3ad7b3b5a9a4c4645bae1b00ccd7501d, type: 3}
+      propertyPath: startingDirection.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8221240015855524630, guid: 3ad7b3b5a9a4c4645bae1b00ccd7501d, type: 3}
       propertyPath: m_RootOrder
       value: 3

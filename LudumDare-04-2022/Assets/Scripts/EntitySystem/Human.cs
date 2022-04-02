@@ -3,7 +3,7 @@ using WallSystem;
 
 namespace EntitySystem
 {
-    public class Death: MovingEntity
+    public class Human: MovingEntity
     {
         protected override void OnDeath()
         {

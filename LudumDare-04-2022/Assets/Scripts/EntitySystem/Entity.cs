@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 using WallSystem;
 
 namespace EntitySystem
@@ -7,31 +8,48 @@ namespace EntitySystem
     public abstract class Entity : MonoBehaviour
     {
         private SortedSet<Entity> _nearbyEntities;
-        private GameObject _sprite;
-        public static int EntityMask { get; private set; }
-        public bool Dead { get; private set; } = false;
+        [SerializeField] private GameObject spriteContainer;
+
+        protected GameObject CameraObject;
         
-        void Start()
+        public static int EntityMask
         {
-            _sprite = this.GetComponentInChildren<SpriteRenderer>().gameObject;
-            if (_sprite == null)
+            get
             {
-                Debug.LogWarning($"Entity {this.name} has no child containing a SpriteRenderer");
+                if (_entityMask < 0)
+                {
+                    string[] entityLayers = {"Entity"};
+                    _entityMask = LayerMask.GetMask(entityLayers);
+                }
+
+                return _entityMask;
             }
         }
 
-        static Entity()
-        {
-            string[] entityLayers = {"Entity"};
-            EntityMask = LayerMask.GetMask(entityLayers);
-        }
+        private static int _entityMask = -1;
+        public bool Dead { get; private set; } = false;
         
+        protected virtual void Start()
+        {
+            if (spriteContainer.GetComponent<SpriteRenderer>() != null)
+            {
+                Debug.LogWarning($"The SpriteContainer of Entity {this.name} directly has a SpriteRenderer as Component. This may lead to visual bugs. Put the Renderer in a child Gameobject");
+            }
+            if (spriteContainer.transform.localPosition != Vector3.zero || spriteContainer.transform.localScale != Vector3.one || spriteContainer.transform.eulerAngles != Vector3.zero) {
+                Debug.LogWarning($"The SpriteContainer if Entity {this.name} has the wrong Transform. This may lead to visual bugs.");
+            }
+
+            _nearbyEntities = new();
+            CameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+            if (CameraObject == null)
+            {
+                Debug.LogError("Camera not found. Needs to have 'MainCamera' tag.");
+            }
+        }
+
         protected virtual void Update()
         {
-            if (_sprite != null)
-            {
-                _sprite.transform.forward = this.transform.forward;
-            }
+            spriteContainer.transform.up = CameraObject.transform.forward;
             if (!Dead)
             {
                 foreach (var nearbyEntity in _nearbyEntities)
