@@ -32,8 +32,8 @@ jobs:
       fail-fast: true
       matrix:
         platform:
-          - targetPlatform: WebGL
-            image: webgl
+          # - targetPlatform: WebGL
+          #   image: webgl
           - targetPlatform: StandaloneLinux64
             image: linux-il2cpp
           - targetPlatform: StandaloneWindows64
@@ -79,8 +79,8 @@ jobs:
       fail-fast: true
       matrix:
         channel:
-          - deploymentPlatform: webgl
-            targetPlatform: WebGL # name of the target platform in the build job
+          # - deploymentPlatform: webgl
+          #   targetPlatform: WebGL # name of the target platform in the build job
           - deploymentPlatform: linux
             targetPlatform: StandaloneLinux64
           - deploymentPlatform: windows
