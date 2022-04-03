@@ -1178,6 +1178,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1874838816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2813788863483859332, guid: 49aab799bd308f843bad873a7d6b27b2, type: 3}
+  m_PrefabInstance: {fileID: 3476332676501688785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1874838817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874838816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c63380de3a27e94fb11962403badb0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioEntries:
+  - AudioClip: {fileID: 8300000, guid: a0e3bedb8d472ca4e87ac3e7c42a8071, type: 3}
+    AudioMixerGroup: {fileID: 6352610424411763479, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: be3e80a0e76e6de489cf99b171dbdde0, type: 3}
+    AudioMixerGroup: {fileID: -5967849358937122134, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 32951afeae8cca845b09873095c15878, type: 3}
+    AudioMixerGroup: {fileID: -8019666990473711022, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: f67c6b7c624aab649a0dd48ef859a7ea, type: 3}
+    AudioMixerGroup: {fileID: 7273972535198242584, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 2de21a193c7e8a24ebc0ea1f2b86ee32, type: 3}
+    AudioMixerGroup: {fileID: -7098378847885200897, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: fc6228a969fe04c469959476cd8c29e8, type: 3}
+    AudioMixerGroup: {fileID: 3104248692756829426, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 3ab033478899a9e459fac7ce1ca6bf0f, type: 3}
+    AudioMixerGroup: {fileID: -5049451368814244540, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 388fb0a769d07714ba0c6c7c9ffd5ba0, type: 3}
+    AudioMixerGroup: {fileID: -7019700174309035858, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 00175e038ea08f14cb04a81380ecb838, type: 3}
+    AudioMixerGroup: {fileID: 8728607414567867649, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 74f16885350a33a4c8b14598d02621f6, type: 3}
+    AudioMixerGroup: {fileID: -270580898748266601, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 53de1d621c4a15d4c8ab6e78f68bad83, type: 3}
+    AudioMixerGroup: {fileID: 4794015907381042219, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: b87f8cfceb097ba46a7aa3ba243ecf3c, type: 3}
+    AudioMixerGroup: {fileID: 1354080935042192327, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 7741dacdb6334f349b51a293dde5cd57, type: 3}
+    AudioMixerGroup: {fileID: -6980079764126501788, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 7b4764f71c082e243908db326846adbc, type: 3}
+    AudioMixerGroup: {fileID: 610639097395498317, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: a5b3152a0d5a56142aee054d6c87a7f1, type: 3}
+    AudioMixerGroup: {fileID: 3401179645592258124, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: ae9234bcd41272949b27f8a918f4faac, type: 3}
+    AudioMixerGroup: {fileID: 2537829531591381223, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 6142f034f74759b4096725d425bd394b, type: 3}
+    AudioMixerGroup: {fileID: -4567841373723326664, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: b4b4dc03c0b82594298ec758a2cdad0d, type: 3}
+    AudioMixerGroup: {fileID: 5196189991015083917, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 01e08f5a779fda44c85d045e5325c3bc, type: 3}
+    AudioMixerGroup: {fileID: -4802344707512962482, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
 --- !u!1001 &2041563564
 PrefabInstance:
   m_ObjectHideFlags: 0
