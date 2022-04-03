@@ -123,6 +123,71 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &121965115
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 379578850, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392384, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392397, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: m_Name
+      value: DrawingColliders
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999794219001392399, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 3411583132070985962, guid: 5d3876ac4a9bd4344bac404eb2362cfe, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a29ebc2d800cf24d87b0ca8de78c447, type: 3}
 --- !u!1001 &214463448
 PrefabInstance:
   m_ObjectHideFlags: 0
