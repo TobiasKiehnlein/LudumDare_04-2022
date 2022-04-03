@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActivateOnStart : MonoBehaviour
+namespace Utils
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ActivateOnStart : MonoBehaviour
     {
-        GetComponent<Image>().enabled = true;
+        // Start is called before the first frame update
+        void Start()
+        {
+            GetComponent<Image>().enabled = true;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace EntitySystem
             //throw new System.NotImplementedException();
         }
 
-        protected override void HandleNearbyEntity(Entity e)
+        protected override void HandleNearbyEntity(Entity e, float distance)
         {
             //throw new System.NotImplementedException();
         }

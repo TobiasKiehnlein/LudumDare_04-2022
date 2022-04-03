@@ -13,7 +13,7 @@ namespace EntitySystem
 
         private const int MaxHitcount = 5;
         private const float MinMoveDistance = 0.0f; // Per update and iteration
-        private const float MaxMoveDistance = 100.000f; // Per update and iteration
+        private const float MaxMoveDistance = 10.000f; // Per update and iteration
 
         public Vector2 Direction
         {
@@ -47,8 +47,10 @@ namespace EntitySystem
             {
                 distance = Speed * (Time.deltaTime - hitDeltaTime);
                 distance = Math.Clamp(distance, MinMoveDistance, MaxMoveDistance);
-                Debug.DrawRay(gameObject.transform.position, Direction * distance, Color.green, 60);
-                var hits = Physics2D.CircleCastAll(gameObject.transform.position, wallCollisionDistance, Direction, distance, Wall.WallMask);
+                var position = gameObject.transform.position;
+                Debug.DrawRay(position, Direction * distance, Color.green, 5);
+                // ReSharper disable once Unity.PreferNonAllocApi
+                var hits = Physics2D.CircleCastAll(position, wallCollisionDistance, Direction, distance, Wall.WallMask);
                 RaycastHit2D? confirmedHit = null;
                 if (hits.Length > 0) // We have hit a Wall, but it might be the same from the last iteration
                 {
@@ -68,7 +70,7 @@ namespace EntitySystem
 
                 if (confirmedHit is { } hit)
                 {
-                    Debug.DrawRay(hit.point, hit.normal * 10, Color.red, 60);
+                    Debug.DrawRay(hit.point, hit.normal * 10, Color.red, 5);
                     var actualHitDistance = hit.distance - wallCollisionDistance;
                     this.gameObject.transform.Translate(Direction * actualHitDistance); // Important: actualHitDistance, not distance -> otherwise entity will move too far
                     hitDeltaTime += actualHitDistance / Speed;
