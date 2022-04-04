@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Palmmedia.ReportGenerator.Core;
 using UnityEngine;
 using Utils;
 using WallSystem;

@@ -23,6 +23,7 @@ public class CreateAudioSources : MonoBehaviour
             audioSource.clip = audioEntry.AudioClip;
             audioSource.loop = true;
             audioSource.outputAudioMixerGroup = audioEntry.AudioMixerGroup;
+            audioSource.dopplerLevel = 0;
             audioSource.Play();
         }
     }
