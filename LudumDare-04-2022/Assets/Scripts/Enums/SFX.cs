@@ -11,10 +11,12 @@
 
     public enum Music
     {
-        Silent,
-        SilentDrums,
-        MediumDrums,
-        IntenseDrums,
-        Menu
+        Minor0,
+        Major,
+        Minor1,
+        Minor2,
+        Minor3,
+        Minor4,
+        Minor5
     }
 }

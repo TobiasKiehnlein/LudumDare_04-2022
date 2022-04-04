@@ -68,9 +68,9 @@ namespace Utils
             }
         }
 
-        public void StartSound(Music music, float time = 5)
+        public void StartSound(Music music, float transitionTime = 5)
         {
-            mixer.FindSnapshot(music.ToString()).TransitionTo(time);
+            mixer.FindSnapshot(music.ToString()).TransitionTo(transitionTime);
         }
 
         public void StopSound(Sfx sfx)

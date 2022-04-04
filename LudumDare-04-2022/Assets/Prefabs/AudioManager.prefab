@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2813788863483859334}
   - component: {fileID: 2813788863483859333}
+  - component: {fileID: 8272610709837872061}
   - component: {fileID: 1874838817}
   m_Layer: 0
   m_Name: AudioManager
@@ -47,6 +48,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
   gameSettings: {fileID: 11400000, guid: e35ad62dce61f2141a769242bd5831e5, type: 2}
+--- !u!114 &8272610709837872061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2813788863483859332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc8db373baf4140b2a90a14a2702afc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxClips: []
+  mixerGroup: {fileID: 676529090207579372, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
 --- !u!114 &1874838817
 MonoBehaviour:
   m_ObjectHideFlags: 0
