@@ -24,8 +24,12 @@ public class RayWall : MonoBehaviour
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (!Physics.Raycast(ray, out var hit, 500.0f)) return;
 
-        if (hit.transform == null) return;
-        var target = hit.point + Vector3.back * .1f;
+        if (hit.transform == null)
+        {
+            Debug.LogWarning("No target for start");
+            return;
+        }
+        var target = hit.point;
         _edgeCollider.points = new Vector2[] {target, target};
 
         HandleEmissionChange(false);
