@@ -1,4 +1,5 @@
 ﻿using System;
+using EntitySystem;
 using UnityEngine;
 
 namespace Utils
@@ -25,6 +26,16 @@ namespace Utils
             }
 
             return false;
+        }
+
+        public static int ToInt<T>(this T e) where T : Enum
+        {
+            return (int) Convert.ChangeType(e, typeof(int));
+        }
+
+        public static T ToEnum<T>(this int i) where T : Enum
+        {
+            return (T) Enum.ToObject(typeof(T), i);
         }
     }
 }

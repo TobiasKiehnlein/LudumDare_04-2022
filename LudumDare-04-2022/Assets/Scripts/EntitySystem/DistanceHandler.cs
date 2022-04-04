@@ -9,7 +9,7 @@ namespace EntitySystem
     {
         public static DistanceHandler Instance { get; private set; } = null;
 
-        private QuadMatrix<float> _distanceMatrix;
+        private QuadMatrix _distanceMatrix;
         private List<Entity> _entities;
 
         private void Awake()
@@ -21,7 +21,7 @@ namespace EntitySystem
             }
 
             Instance = this;
-            _distanceMatrix = new QuadMatrix<float>(0, float.PositiveInfinity);
+            _distanceMatrix = new QuadMatrix(0, float.PositiveInfinity);
             _entities = new List<Entity>(0);
         }
 

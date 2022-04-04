@@ -1,17 +1,64 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
-using WallSystem;
 
 namespace EntitySystem
 {
     public abstract class Entity : MonoBehaviour
     {
         [SerializeField] private GameObject spriteContainer;
-        [SerializeField] private float nearbyRadius = 10f;
+        protected const float NearbyRadius = 30f;
+        protected const float HighDistance = NearbyRadius - 5f;
+        protected const float MedDistance = HighDistance / 2f;
+        protected const float LowDistance = 5f;
+        protected const float CollisionDistance = 1f;
+        public readonly Type type;
+
+        public Entity(Type t)
+        {
+            type = t;
+        }
+
+        [Serializable]
+        public enum Type
+        {
+            Death,
+            Human,
+            Cross,
+            Totem,
+            Obstacle,
+            VisualOnly,
+        }
+
+        public struct DistanceInformation
+        {
+            public readonly float Distance;
+            
+            // Fractions are 1 if distance is 0, get smaller if further away
+            public readonly float MaxDistanceFraction;
+            public readonly float HighDistanceFraction;
+            public readonly float MedDistanceFraction;
+            public readonly float LowDistanceFraction;
+
+            public readonly bool IsHighDistance;
+            public readonly bool IsMedDistance;
+            public readonly bool IsLowDistance;
+            public readonly bool IsCollision;
+
+            public DistanceInformation(float distance)
+            {
+                this.Distance = distance;
+                MaxDistanceFraction = 1.0f - Mathf.Min(distance, NearbyRadius) / NearbyRadius;
+                HighDistanceFraction = 1.0f - Mathf.Min(distance, HighDistance) / HighDistance;
+                IsHighDistance = (distance <= HighDistance);
+                MedDistanceFraction = 1.0f - Mathf.Min(distance, MedDistance) / MedDistance;
+                IsMedDistance = (distance <= MedDistance);
+                LowDistanceFraction = 1.0f - Mathf.Min(distance, LowDistance) / LowDistance;
+                IsLowDistance = (distance <= LowDistance);
+                IsCollision = (distance <= CollisionDistance);
+            }
+        }
 
         protected GameObject CameraObject;
         
@@ -34,6 +81,12 @@ namespace EntitySystem
         
         protected virtual void Start()
         {
+            if (DistanceHandler.Instance == null)
+            {
+                Debug.LogError("DistanceHandler missing");
+                Destroy(this);
+                return;
+            }
             DistanceHandler.Instance.Register(this);
             
             if (!this.gameObject.IsInLayerMask(EntityMask))
@@ -58,92 +111,44 @@ namespace EntitySystem
 
         private void OnDestroy()
         {
-            DistanceHandler.Instance.Register(this);
+            DistanceHandler.Instance.UnRegister(this);
         }
-
-        /*
-        private void SetupTriggers()
-        {
-            bool hasTrigger = false;
-            bool hasCollider = false;
-            bool hasRigidbody = false; // Rigidbody is needed for Triggers to work. Should be used only in kinematic mode.
-
-            foreach ( var colliderComponent in GetComponents<Collider2D>())
-            {
-                if (colliderComponent.isTrigger) hasTrigger = true;
-                else hasCollider = true;
-            }
-
-            if (GetComponent<Rigidbody2D>() != null)
-            {
-                hasRigidbody = true;
-                Debug.LogWarning($"The Entity {this.name} already has a Rigidbody. This is not recommended.");
-            }
-
-            if (!hasTrigger)
-            {
-                if (defaultNearbyRadius == 0)
-                {
-                    Debug.Log($"The Entity {this.name} has no trigger for nearby Entities and defaultNearbyRadius == 0. It will not be able to detect other Entities.");
-                }
-                else
-                {
-                    var newTrigger = this.AddComponent<CircleCollider2D>();
-                    newTrigger.radius = defaultNearbyRadius;
-                    newTrigger.isTrigger = true;
-                }
-            }
-            else
-            {
-                Debug.Log($"The Entity {this.name} already has a trigger for nearby Entities. Ignoring defaultNearbyRadius.");
-            }
-
-            if (!hasRigidbody && (hasTrigger || (defaultNearbyRadius > 0)))
-            {
-                var newRigidbody = this.AddComponent<Rigidbody2D>();
-                newRigidbody.isKinematic = true;
-            }
-
-            if (!hasCollider)
-            {
-                if (defaultColliderRadius == 0)
-                {
-                    Debug.Log($"The Entity {this.name} has no (non trigger) Collider and defaultColliderRadius == 0. It will not be detected by other Entities but can detect Entities itself.");
-                }
-                else
-                {
-                    var newCollider = this.AddComponent<CircleCollider2D>();
-                    newCollider.radius = defaultColliderRadius;
-                    newCollider.isTrigger = false;
-                }
-            }
-            else
-            {
-                Debug.Log($"The Entity {this.name} already has a (non trigger) Collider. Ignoring defaultColliderRadius.");
-            }
-        }*/
 
         protected virtual void Update()
         {
             spriteContainer.transform.up = CameraObject.transform.forward;
             if (!Dead)
             {
-                var distances = DistanceHandler.Instance.GetDistancesFor(this).Where(value => value.Value <= nearbyRadius && value.Key != this);
+                var distances = DistanceHandler.Instance.GetDistancesFor(this).Where(value => value.Value <= NearbyRadius && value.Key != this);
                 foreach (var (entity, distance) in distances)
                 {
-                    this.HandleNearbyEntity(entity, distance);
+                    this.HandleNearbyEntity(entity, new DistanceInformation(distance));
                 }
+                DebugDrawNearby();
             }
+        }
+
+        private void DebugDrawNearby()
+        {
+            var pos = gameObject.transform.position;
+            Debug.DrawRay(pos, Vector3.left * NearbyRadius, Color.blue);
+            Debug.DrawRay(pos, Vector3.right * NearbyRadius, Color.blue);
+            Debug.DrawRay(pos, Vector3.up * NearbyRadius, Color.blue);
+            Debug.DrawRay(pos, Vector3.down * NearbyRadius, Color.blue);
+        }
+
+        protected virtual void FixedUpdate()
+        {
         }
 
         protected abstract void OnDeath();
 
-        public void Die()
+        public void Kill()
         {
             Dead = true;
             OnDeath();
         }
 
-        protected abstract void HandleNearbyEntity(Entity e, float distance);
+        protected abstract void HandleNearbyEntity(Entity e, DistanceInformation distInfo);
     }
 }

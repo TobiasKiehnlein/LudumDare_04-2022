@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1404066144609160090}
-  - component: {fileID: 2348445276848939253}
   - component: {fileID: 3617769468239683547}
   m_Layer: 7
   m_Name: Human
@@ -34,22 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &2348445276848939253
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404066144609160091}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &3617769468239683547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteContainer: {fileID: 6149164555744196271}
+  nearbyRadius: 5
+  settings: {fileID: 11400000, guid: b968b510c3431294bbb5ade48eb87d85, type: 2}
+  startingDirection: {x: 1.5, y: 4.6}
+  startingSpeed: 10
+  state: 0
 --- !u!1 &1404066145354753571
 GameObject:
   m_ObjectHideFlags: 0

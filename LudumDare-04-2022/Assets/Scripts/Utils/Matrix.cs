@@ -1,27 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Utils
 {
-    public class Matrix<T>
+    public class Matrix
     {
-        private readonly T _defaultValue;
+        private readonly float _defaultValue;
         public int M { get; private set; }
         public int N { get; private set; }
-        private List<List<T>> Data;
-        
+        private List<List<float>> Data;
 
-        public Matrix(int m, int n, T defaultValue)
+
+        public Matrix(int m, int n, float defaultValue)
         {
             _defaultValue = defaultValue;
             M = m;
             N = n;
-            Data = new List<List<T>>(M);
-            foreach (var i in Enumerable.Range(0, M))
-            {
-                Data[i] = Enumerable.Repeat(_defaultValue, N).ToList();
-            }
+            Data = Enumerable.Range(0, M).Select(_ => Enumerable.Repeat(_defaultValue, N).ToList()).ToList();
         }
 
         public virtual void InsertRow(int i)
@@ -55,7 +54,7 @@ namespace Utils
 
             ++N;
         }
-        
+
         public virtual void RemoveRow(int i)
         {
             Data.RemoveAt(i);
@@ -72,26 +71,51 @@ namespace Utils
             --N;
         }
 
-        public T Get(int i, int j)
+        public float Get(int i, int j)
         {
             return Data[i][j];
         }
 
-        public List<T> GetRow(int i)
+        public List<float> GetRow(int i)
         {
             return Data[i];
         }
-        
-        public void Set(int i, int j, T value)
+
+        public void Set(int i, int j, float value)
         {
             Data[i][j] = value;
         }
+
+        public void CloneAndMultiplyElementWise(Matrix other)
+        {
+            Debug.Assert(M == other.M && N == other.N, "Matrices must be same size.");
+            var result = new Matrix(M, N, _defaultValue);
+            for (int i = 0; i < M; ++i)
+            {
+                for (int j = 0; j < N; ++j)
+                {
+                    result.Set(i, j, Get(i, j) * other.Get(i, j));
+                }
+            }
+        }
+
+        public void CloneAndMultiplyColumnWise(float[] other)
+        {
+            Debug.Assert(N == other.Length, "Other must be the length of the columns");
+            var result = new Matrix(M, N, _defaultValue);
+            for (int i = 0; i < M; ++i)
+            {
+                for (int j = 0; j < N; ++j)
+                {
+                    result.Set(i, j, Get(i, j) * other[j]);
+                }
+            }
+        }
     }
 
-    public class QuadMatrix<T>: Matrix<T>
+    public class QuadMatrix : Matrix
     {
-
-        public QuadMatrix(int m, T defaultValue): base(m, m, defaultValue)
+        public QuadMatrix(int m, float defaultValue) : base(m, m, defaultValue)
         {
         }
 
