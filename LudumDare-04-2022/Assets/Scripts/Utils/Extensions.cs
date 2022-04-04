@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using EntitySystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Utils
 {
@@ -36,6 +39,12 @@ namespace Utils
         public static T ToEnum<T>(this int i) where T : Enum
         {
             return (T) Enum.ToObject(typeof(T), i);
+        }
+
+        public static T GetRandomElement<T>(this IEnumerable<T> list)
+        {
+            var rnd = Random.Range(0, list.Count());
+            return list.ElementAt(rnd);
         }
     }
 }
