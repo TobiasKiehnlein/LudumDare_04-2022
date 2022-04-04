@@ -10,6 +10,7 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
 {
     [SerializeField] private bool isPreselected;
     [SerializeField] private Sprite sprite;
+    [SerializeField] private Sprite activeSprite;
     [SerializeField] private float reloadTimeInSeconds;
     [SerializeField] private int maxAmount;
     [SerializeField] [Range(0, 99)] private int currentAmount;
@@ -22,7 +23,6 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
     private Slider _slider;
     private float _timeUntilIncrement;
     private Button _button;
-    private Image _activeIndicator;
 
     private void Start()
     {
@@ -32,7 +32,6 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
         _slider = GetComponentInChildren<Slider>();
 
         _image.sprite = sprite;
-        _activeIndicator = GetComponentInChildren<ActiveIndicator>().GetComponent<Image>();
 
         if (isPreselected)
         {
@@ -80,11 +79,11 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
 
     public void Deactivate()
     {
-        _activeIndicator.enabled = false;
+        _image.sprite = sprite;
     }
 
     public void Activate()
     {
-        _activeIndicator.enabled = true;
+        _image.sprite = activeSprite;
     }
 }

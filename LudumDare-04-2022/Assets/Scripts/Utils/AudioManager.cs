@@ -20,6 +20,8 @@ namespace Utils
 
         private AudioSource[] _musicSources;
         private AudioSource[] _sfxSources;
+        public bool SfxMute { get; private set; }
+        public bool MusicMute { get; private set; }
 
         private void Awake()
         {
@@ -42,6 +44,7 @@ namespace Utils
 
         public void SetMusicMute(bool muted)
         {
+            MusicMute = muted;
             foreach (var musicSource in _musicSources)
             {
                 musicSource.mute = muted;
@@ -50,6 +53,7 @@ namespace Utils
 
         public void SetSfxMute(bool muted)
         {
+            SfxMute = muted;
             foreach (var source in _sfxSources)
             {
                 source.mute = muted;
@@ -58,11 +62,13 @@ namespace Utils
         
         public void SetMusicVolume(float vol)
         {
+            SetMusicMute(false);
             gameSettings.MusicVolume = vol;
         }
         
         public void SetSfxVolume(float vol)
         {
+            SetSfxMute(false);
             gameSettings.SfxVolume = vol;
         }
 

@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RayWallSystem
 {
@@ -41,7 +42,7 @@ namespace RayWallSystem
         // Update is called once per frame
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && HandleInstantiation != null && HandleInstantiation.ClickAllowed())
+            if (Input.GetMouseButtonDown(0) && HandleInstantiation != null && HandleInstantiation.ClickAllowed() && !EventSystem.current.IsPointerOverGameObject())
             {
                 var activePrefab = prefab != null ? prefab : initialPrefab;
                 if (activePrefab == null) return;

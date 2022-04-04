@@ -27,6 +27,7 @@ namespace Utils
 
         public void LoadMenuScene()
         {
+            Time.timeScale = 1;
             StartCoroutine(LoadScene(0));
         }
     }
