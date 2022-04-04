@@ -24,6 +24,7 @@ namespace EntitySystem
         {
             //throw new NotImplementedException();
             Debug.Log($"{this.name} was killed.");
+            Destroy(this.gameObject);
         }
 
         protected override void HandleNearbyEntity(Entity e, DistanceInformation distInfo)

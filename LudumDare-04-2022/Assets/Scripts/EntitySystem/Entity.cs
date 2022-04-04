@@ -9,8 +9,10 @@ namespace EntitySystem
     {
         [SerializeField] protected GameObject spriteContainer;
         [SerializeField] protected bool handleNearby = false;
+        [SerializeField] protected bool mirrored = false;
         private float _lastNearbyUpdate = 0;
         private DistanceHandler.DistanceInformation[] _distanceInformations = null;
+        public static readonly Vector3 MirrorScale = new Vector3(-1, 1, 1);
 
         protected const float NearbyRadius = 15f;
         protected const float HighDistance = NearbyRadius - 2f;
@@ -18,6 +20,9 @@ namespace EntitySystem
         protected const float LowDistance = 5f;
         protected const float CollisionDistance = 2f;
         public readonly Type type;
+        
+        private static int _entityMask = -1;
+        public bool Dead { get; private set; } = false;
 
         public Entity(Type t)
         {
@@ -80,9 +85,6 @@ namespace EntitySystem
             }
         }
 
-        private static int _entityMask = -1;
-        public bool Dead { get; private set; } = false;
-
         protected virtual void Start()
         {
             if (DistanceHandler.Instance == null)
@@ -120,6 +122,8 @@ namespace EntitySystem
             }
             
             _distanceInformations = new DistanceHandler.DistanceInformation[] {};
+            
+            if (mirrored) spriteContainer.transform.localScale = MirrorScale;
         }
 
         private void OnDestroy()
@@ -141,7 +145,7 @@ namespace EntitySystem
 
                 foreach (var info in _distanceInformations)
                 {
-                    if (info.Distance <= NearbyRadius && info.Entity != this)
+                    if (info.Entity != null && info.Distance <= NearbyRadius && info.Entity != this)
                     {
                         this.HandleNearbyEntity(info.Entity, new DistanceInformation(info.Distance));
                     }

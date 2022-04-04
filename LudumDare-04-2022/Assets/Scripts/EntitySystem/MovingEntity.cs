@@ -18,8 +18,6 @@ namespace EntitySystem
         public float unityReportSpeed = 0; // only reports to editor
         public float unityReportTargetSpeed = 0; // only reports to editor
 
-        public static readonly Vector3 MirrorVector = new Vector3(-1, 1, 1);
-
         protected Animator Animator { get; private set; }
 
         private float _stateUpdateCooldownRemaining;
@@ -68,7 +66,7 @@ namespace EntitySystem
         {
             if (newDirection.x < 0)
             {
-                spriteContainer.transform.localScale = MirrorVector;
+                spriteContainer.transform.localScale = MirrorScale;
             }
             else
             {
