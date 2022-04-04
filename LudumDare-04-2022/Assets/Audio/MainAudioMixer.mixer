@@ -374,6 +374,7 @@ AudioMixerSnapshotController:
   m_FloatValues:
     05a3f821d4ad920449c38a4c5cf8f9fa: -9.332112
     eebb690253f0c53408a0f5237ef4fe7c: 1.1400865
+    97505f353aec1774ca69bbec46c4fa0c: 1
     e82b0d26253d8024fa8771ad859226ae: -80
     fc2281b6fdccf0d408ce9558ab13fd84: -80
     ea0c7be8323058f4c8935b675e0ac5fe: -80
@@ -444,14 +445,16 @@ AudioMixerSnapshotController:
   m_SnapshotID: aba2f734fc6ab5d468df94fe71d80165
   m_FloatValues:
     05a3f821d4ad920449c38a4c5cf8f9fa: -80
+    04809241eb7bf8b4fbe1cb64f6a5a8e1: -19.928473
     89c783a35ecb4ee42bae7dcefb4ead68: -20.610773
-    410397c421c4d574b9ae2ad00ea10e00: -2.5738313
-    97505f353aec1774ca69bbec46c4fa0c: 1
-    1025b3f8859b9134b99c151c213d0a35: -5.7224774
+    410397c421c4d574b9ae2ad00ea10e00: -3.5090396
+    97505f353aec1774ca69bbec46c4fa0c: 1.2
+    ea0c7be8323058f4c8935b675e0ac5fe: 0.10800299
+    1025b3f8859b9134b99c151c213d0a35: -12.498478
     159a668bf7b5f134fb3dd275400c5270: -4.9356413
-    3f45a26cc2c5d3a47a1ff7b23512fadb: -3.8468575
-    946106eca6d7ae84aad854b6c8a02642: -9.332112
-    6a4c5fde1385ad84585020004641e523: -7.436929
+    3f45a26cc2c5d3a47a1ff7b23512fadb: -7.8940816
+    946106eca6d7ae84aad854b6c8a02642: -7.436929
+    6a4c5fde1385ad84585020004641e523: -9.833286
   m_TransitionOverrides: {}
 --- !u!244 &-1121581379826008924
 AudioMixerEffectController:
@@ -581,7 +584,7 @@ AudioMixerController:
     - 6b8960bb9f83a334e82ebd260e1978aa
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: -1134930708513148677}
+  m_TargetSnapshot: {fileID: 7976305927178697441}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -1071,6 +1074,7 @@ AudioMixerSnapshotController:
     eebb690253f0c53408a0f5237ef4fe7c: -10.867776
     c0468d25dc8fe6a4d8492022a0608e5c: -80
     e82b0d26253d8024fa8771ad859226ae: -7.5501633
+    ea0c7be8323058f4c8935b675e0ac5fe: -5.3230715
     96c470f8693c6be45969307973d180b4: -3.5090396
     59490bc946aaf4446bda642946c86b6a: -80
     62bc5d9a1b51f204aad3ac0c302c00bf: -80
