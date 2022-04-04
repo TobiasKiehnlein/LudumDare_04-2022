@@ -7,6 +7,8 @@ namespace EntitySystem
 {
     public class Human : MovingEntity<Human.Mood>
     {
+        [SerializeField] private GameObject TombPrefab = null;
+        
         private float lastDeathTimeout = 0;
 
         [Serializable]
@@ -60,6 +62,12 @@ namespace EntitySystem
                 else if (lastDeathTimeout < Time.time - settings.human_deathMoveTimeout)
                 {
                     var pos = gameObject.transform.position;
+                    if (TombPrefab != null)
+                    {
+                        var tomb = Instantiate(TombPrefab);
+                        tomb.transform.position = pos;
+                        TombPrefab = null;
+                    }
                     var newZ = Mathf.Lerp(pos.z, 4, Time.deltaTime * 0.5f);
                     this.gameObject.transform.position = new Vector3(pos.x, pos.y, newZ);
                 }

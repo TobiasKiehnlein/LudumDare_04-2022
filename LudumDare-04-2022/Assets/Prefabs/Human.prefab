@@ -140,15 +140,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e93c15591dd04190b6644a67f0075cae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: b968b510c3431294bbb5ade48eb87d85, type: 2}
   spriteContainer: {fileID: 6149164555744196271}
   handleNearby: 1
   mirrored: 0
-  settings: {fileID: 11400000, guid: b968b510c3431294bbb5ade48eb87d85, type: 2}
   startingSpeed: 10
   speedAdjustSpeed: 1
   state: 0
   unityReportSpeed: 0
   unityReportTargetSpeed: 0
+  TombPrefab: {fileID: 9009286610744640029, guid: a3b62a581f3c54d40a565763c42c3dfc, type: 3}
 --- !u!1 &1512937394221666992
 GameObject:
   m_ObjectHideFlags: 0
