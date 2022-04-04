@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Utils;
@@ -7,13 +8,25 @@ namespace EntitySystem
 {
     public class DistanceHandler : MonoBehaviour
     {
-        private const float Interval = .3f;
-        private float last = 0;
+        private const float UpdateInterval = .3f;
+        public float LastUpdate { get; private set; } = 0;
 
         public static DistanceHandler Instance { get; private set; } = null;
 
         private QuadMatrix _distanceMatrix;
         private List<Entity> _entities;
+        
+        public struct DistanceInformation
+        {
+            public Entity Entity;
+            public float Distance;
+
+            public DistanceInformation(Entity e, float distance)
+            {
+                this.Entity = e;
+                this.Distance = distance;
+            }
+        }
 
         private void Awake()
         {
@@ -30,9 +43,9 @@ namespace EntitySystem
 
         private void Update()
         {
-            if (last < Time.time - Interval)
+            if (LastUpdate < Time.time - UpdateInterval)
             {
-                last = Time.time;
+                LastUpdate = Time.time;
                 for (var i = 0; i < _entities.Count; i++)
                 {
                     for (var j = i; j < _entities.Count; j++)
@@ -59,12 +72,12 @@ namespace EntitySystem
             _distanceMatrix.Remove(index);
         }
 
-        public Dictionary<Entity, float> GetDistancesFor(Entity e)
+        public DistanceInformation[] GetDistancesFor(Entity e)
         {
             var index = GetEntityIndex(e);
             var distances = _distanceMatrix.GetRow(index);
             Debug.Assert(distances.Count == _entities.Count, "Distances and registered entities do not match");
-            return Enumerable.Range(0, _entities.Count).ToDictionary(i => _entities[i], i => distances[i]);
+            return _entities.Zip(distances, (e1, d) => new DistanceInformation(e1, d)).ToArray();
         }
 
         private int GetEntityIndex(Entity e)

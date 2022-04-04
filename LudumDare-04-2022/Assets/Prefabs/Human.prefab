@@ -46,10 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteContainer: {fileID: 6149164555744196271}
-  nearbyRadius: 5
+  handleNearby: 1
   settings: {fileID: 11400000, guid: b968b510c3431294bbb5ade48eb87d85, type: 2}
-  startingDirection: {x: 1.5, y: 4.6}
   startingSpeed: 10
+  speedAdjustSpeed: 1
+  unityReportSpeed: 0
+  unityReportTargetSpeed: 0
   state: 0
 --- !u!1 &1404066145354753571
 GameObject:

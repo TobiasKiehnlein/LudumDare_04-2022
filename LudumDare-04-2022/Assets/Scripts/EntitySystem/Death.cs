@@ -10,29 +10,6 @@ namespace EntitySystem
 
         private TransitionMatrix<Mood> _transitionMatrix = new TransitionMatrix<Mood>();
 
-        private void SetupTransitionMatrix()
-        {
-            _transitionMatrix.SetWeight(Mood.Normal, Mood.Normal, 15);
-            _transitionMatrix.SetWeight(Mood.Normal, Mood.Aggressive, 5);
-            _transitionMatrix.SetWeight(Mood.Normal, Mood.KillingSpree, 1);
-            _transitionMatrix.SetWeight(Mood.Normal, Mood.Starving, 3);
-            
-            _transitionMatrix.SetWeight(Mood.Aggressive, Mood.Normal, 8);
-            _transitionMatrix.SetWeight(Mood.Aggressive, Mood.Aggressive, 10);
-            _transitionMatrix.SetWeight(Mood.Aggressive, Mood.KillingSpree, 5);
-            _transitionMatrix.SetWeight(Mood.Aggressive, Mood.Starving, 8);
-            
-            _transitionMatrix.SetWeight(Mood.KillingSpree, Mood.Normal, 10);
-            _transitionMatrix.SetWeight(Mood.KillingSpree, Mood.Aggressive, 3);
-            _transitionMatrix.SetWeight(Mood.KillingSpree, Mood.KillingSpree, 8);
-            _transitionMatrix.SetWeight(Mood.KillingSpree, Mood.Starving, 0.5f);
-            
-            _transitionMatrix.SetWeight(Mood.Starving, Mood.Normal, 5);
-            _transitionMatrix.SetWeight(Mood.Starving, Mood.Aggressive, 15);
-            _transitionMatrix.SetWeight(Mood.Starving, Mood.KillingSpree, 1);
-            _transitionMatrix.SetWeight(Mood.Starving, Mood.Starving, 10);
-        }
-
         [Serializable]
         public enum Mood
         {
@@ -44,12 +21,6 @@ namespace EntitySystem
 
         public Death() : base(Type.Death)
         {
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            SetupTransitionMatrix();
         }
 
         protected override void OnDeath()

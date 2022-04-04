@@ -10,39 +10,6 @@ namespace EntitySystem
 
         private TransitionMatrix<Mood> _transitionMatrix = new TransitionMatrix<Mood>();
 
-        private void SetupTransitionMatrix()
-        {
-            _transitionMatrix.SetWeight(Mood.Chilling, Mood.Chilling, 20);
-            _transitionMatrix.SetWeight(Mood.Chilling, Mood.Crowdy, 2);
-            _transitionMatrix.SetWeight(Mood.Chilling, Mood.AntiCrowdy, 3);
-            _transitionMatrix.SetWeight(Mood.Chilling, Mood.Jogging, 1);
-            _transitionMatrix.SetWeight(Mood.Chilling, Mood.Afraid, 0.5f);
-
-            _transitionMatrix.SetWeight(Mood.Crowdy, Mood.Chilling, 5);
-            _transitionMatrix.SetWeight(Mood.Crowdy, Mood.Crowdy, 20);
-            _transitionMatrix.SetWeight(Mood.Crowdy, Mood.AntiCrowdy, 5);
-            _transitionMatrix.SetWeight(Mood.Crowdy, Mood.Jogging, 2);
-            _transitionMatrix.SetWeight(Mood.Crowdy, Mood.Afraid, 0.1f);
-
-            _transitionMatrix.SetWeight(Mood.AntiCrowdy, Mood.Chilling, 4);
-            _transitionMatrix.SetWeight(Mood.AntiCrowdy, Mood.Crowdy, 1);
-            _transitionMatrix.SetWeight(Mood.AntiCrowdy, Mood.AntiCrowdy, 10);
-            _transitionMatrix.SetWeight(Mood.AntiCrowdy, Mood.Jogging, 6);
-            _transitionMatrix.SetWeight(Mood.AntiCrowdy, Mood.Afraid, 1);
-
-            _transitionMatrix.SetWeight(Mood.Jogging, Mood.Chilling, 4);
-            _transitionMatrix.SetWeight(Mood.Jogging, Mood.Crowdy, 4);
-            _transitionMatrix.SetWeight(Mood.Jogging, Mood.AntiCrowdy, 1);
-            _transitionMatrix.SetWeight(Mood.Jogging, Mood.Jogging, 20);
-            _transitionMatrix.SetWeight(Mood.Jogging, Mood.Afraid, 0.5f);
-
-            _transitionMatrix.SetWeight(Mood.Afraid, Mood.Chilling, 1);
-            _transitionMatrix.SetWeight(Mood.Afraid, Mood.Crowdy, 5);
-            _transitionMatrix.SetWeight(Mood.Afraid, Mood.AntiCrowdy, 2);
-            _transitionMatrix.SetWeight(Mood.Afraid, Mood.Jogging, 6);
-            _transitionMatrix.SetWeight(Mood.Afraid, Mood.Afraid, 15);
-        }
-
         [Serializable]
         public enum Mood
         {
@@ -179,12 +146,6 @@ namespace EntitySystem
                     TargetSpeed = settings.human_afraid_targetSpeed;
                     break;
             }
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-            SetupTransitionMatrix();
         }
 
         protected override void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)

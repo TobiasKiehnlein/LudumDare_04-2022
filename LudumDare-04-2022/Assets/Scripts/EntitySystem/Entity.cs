@@ -8,6 +8,10 @@ namespace EntitySystem
     public abstract class Entity : MonoBehaviour
     {
         [SerializeField] private GameObject spriteContainer;
+        [SerializeField] private bool handleNearby = false;
+        private float _lastNearbyUpdate = 0;
+        private DistanceHandler.DistanceInformation[] _distanceInformations = null;
+
         protected const float NearbyRadius = 30f;
         protected const float HighDistance = NearbyRadius - 5f;
         protected const float MedDistance = HighDistance / 2f;
@@ -34,7 +38,7 @@ namespace EntitySystem
         public struct DistanceInformation
         {
             public readonly float Distance;
-            
+
             // Fractions are 1 if distance is 0, get smaller if further away
             public readonly float MaxDistanceFraction;
             public readonly float HighDistanceFraction;
@@ -61,7 +65,7 @@ namespace EntitySystem
         }
 
         protected GameObject CameraObject;
-        
+
         public static int EntityMask
         {
             get
@@ -78,7 +82,7 @@ namespace EntitySystem
 
         private static int _entityMask = -1;
         public bool Dead { get; private set; } = false;
-        
+
         protected virtual void Start()
         {
             if (DistanceHandler.Instance == null)
@@ -87,19 +91,26 @@ namespace EntitySystem
                 Destroy(this);
                 return;
             }
+
             DistanceHandler.Instance.Register(this);
-            
+
             if (!this.gameObject.IsInLayerMask(EntityMask))
             {
                 Debug.LogWarning($"The Entity {this.name} does not have the Entity layer set.");
             }
-            
+
             if (spriteContainer.GetComponent<SpriteRenderer>() != null)
             {
-                Debug.LogWarning($"The SpriteContainer of Entity {this.name} directly has a SpriteRenderer as Component. This may lead to visual bugs. Put the Renderer in a child Gameobject");
+                Debug.LogWarning(
+                    $"The SpriteContainer of Entity {this.name} directly has a SpriteRenderer as Component. This may lead to visual bugs. Put the Renderer in a child Gameobject");
             }
-            if (spriteContainer.transform.localPosition != Vector3.zero || spriteContainer.transform.localScale != Vector3.one || spriteContainer.transform.eulerAngles != Vector3.zero) {
-                Debug.LogWarning($"The SpriteContainer if Entity {this.name} has the wrong Transform. This may lead to visual bugs.");
+
+            if (spriteContainer.transform.localPosition != Vector3.zero ||
+                spriteContainer.transform.localScale != Vector3.one ||
+                spriteContainer.transform.eulerAngles != Vector3.zero)
+            {
+                Debug.LogWarning(
+                    $"The SpriteContainer if Entity {this.name} has the wrong Transform. This may lead to visual bugs.");
             }
 
             CameraObject = GameObject.FindGameObjectWithTag("MainCamera");
@@ -107,6 +118,8 @@ namespace EntitySystem
             {
                 Debug.LogError("Camera not found. Needs to have 'MainCamera' tag.");
             }
+            
+            _distanceInformations = new DistanceHandler.DistanceInformation[] {};
         }
 
         private void OnDestroy()
@@ -117,13 +130,23 @@ namespace EntitySystem
         protected virtual void Update()
         {
             spriteContainer.transform.up = CameraObject.transform.forward;
-            if (!Dead)
+            var lastUpdate = DistanceHandler.Instance.LastUpdate;
+            if (!Dead && handleNearby)
             {
-                var distances = DistanceHandler.Instance.GetDistancesFor(this).Where(value => value.Value <= NearbyRadius && value.Key != this);
-                foreach (var (entity, distance) in distances)
+                if (lastUpdate > _lastNearbyUpdate)
                 {
-                    this.HandleNearbyEntity(entity, new DistanceInformation(distance));
+                    _lastNearbyUpdate = lastUpdate;
+                    _distanceInformations = DistanceHandler.Instance.GetDistancesFor(this);
                 }
+
+                foreach (var info in _distanceInformations)
+                {
+                    if (info.Distance <= NearbyRadius && info.Entity != this)
+                    {
+                        this.HandleNearbyEntity(info.Entity, new DistanceInformation(info.Distance));
+                    }
+                }
+
                 DebugDrawNearby();
             }
         }
