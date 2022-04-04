@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class ItemHandler : MonoBehaviour, IHandleInstantiation
 {
+    [SerializeField] private bool isPreselected;
     [SerializeField] private Sprite sprite;
     [SerializeField] private float reloadTimeInSeconds;
     [SerializeField] private int maxAmount;
@@ -21,6 +22,7 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
     private Slider _slider;
     private float _timeUntilIncrement;
     private Button _button;
+    private Image _activeIndicator;
 
     private void Start()
     {
@@ -30,6 +32,12 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
         _slider = GetComponentInChildren<Slider>();
 
         _image.sprite = sprite;
+        _activeIndicator = GetComponentInChildren<ActiveIndicator>().GetComponent<Image>();
+
+        if (isPreselected)
+        {
+            HandleClick();
+        }
     }
 
     private void Update()
@@ -68,5 +76,15 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
     public bool ClickAllowed()
     {
         return currentAmount > 0;
+    }
+
+    public void Deactivate()
+    {
+        _activeIndicator.enabled = false;
+    }
+
+    public void Activate()
+    {
+        _activeIndicator.enabled = true;
     }
 }

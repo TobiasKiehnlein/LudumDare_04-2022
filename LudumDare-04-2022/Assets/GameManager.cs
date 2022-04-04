@@ -9,6 +9,12 @@ using Utils;
 
 public class GameManager : MonoBehaviour
 {
+    internal struct HumanInfo
+    {
+        public float SpawnTime;
+        public float? DeathTime;
+    }
+
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private List<GameObject> deathPrefabs;
@@ -18,7 +24,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float deathSpawnRateInSeconds = 15;
     [SerializeField] private int peopleCount = 25;
+
+    [SerializeField] private float scoreScale = 1;
+
     private float _lastSpawn;
+    private bool _firstDeath = true;
+
+    public float Score { get; private set; }
+
+    private readonly Dictionary<int, HumanInfo> _data = new();
 
     private void Awake()
     {
@@ -54,5 +68,46 @@ public class GameManager : MonoBehaviour
             death.transform.position = (Vector2) _spawnLocationsDeaths.GetRandomElement().transform.position;
             Debug.Log("Spawning");
         }
+
+        Score += _data.Values.Where(d => d.DeathTime == null).Select(_ => Time.deltaTime).Sum() * scoreScale;
+    }
+
+    public void RegisterDeath(int instanceId)
+    {
+        if (_firstDeath)
+        {
+            AudioManager.Instance.StartSound(Music.Minor1);
+            //TODO trigger bullet time and camera zoom
+            _firstDeath = false;
+        }
+        else
+        {
+            var percentageAlive = (float) _data.Values.Count(d => d.DeathTime == null) / _data.Count * 100;
+            switch (percentageAlive)
+            {
+                case > 90:
+                    AudioManager.Instance.StartSound(Music.Minor1);
+                    break;
+                case > 70:
+                    AudioManager.Instance.StartSound(Music.Minor2, 5);
+                    break;
+                case > 50:
+                    AudioManager.Instance.StartSound(Music.Minor3, 10);
+                    break;
+                case > 15:
+                    AudioManager.Instance.StartSound(Music.Minor4, 10);
+                    break;
+                default:
+                    AudioManager.Instance.StartSound(Music.Minor5);
+                    break;
+            }
+        }
+
+        _data[instanceId] = new HumanInfo {SpawnTime = _data[instanceId].SpawnTime, DeathTime = Time.time};
+    }
+
+    public void RegisterHuman(int instanceId)
+    {
+        _data.Add(instanceId, new HumanInfo {SpawnTime = Time.time});
     }
 }

@@ -12,7 +12,18 @@ namespace RayWallSystem
         public static GlobalItemHandler Instance { get; private set; }
         [HideInInspector] [NonSerialized] public GameObject prefab = null;
         public GameObject initialPrefab;
-        public IHandleInstantiation HandleInstantiation;
+        private IHandleInstantiation _handleInstantiation;
+
+        public IHandleInstantiation HandleInstantiation
+        {
+            get => _handleInstantiation;
+            set
+            {
+                _handleInstantiation?.Deactivate();
+                _handleInstantiation = value;
+                _handleInstantiation.Activate();
+            }
+        }
 
         private void Awake()
         {

@@ -20,8 +20,15 @@ namespace EntitySystem
         {
         }
 
+        protected override void Start()
+        {
+            base.Start();
+            GameManager.Instance.RegisterHuman(gameObject.GetInstanceID());
+        }
+
         protected override void OnDeath()
         {
+            GameManager.Instance.RegisterDeath(gameObject.GetInstanceID());
             //throw new NotImplementedException();
             Debug.Log($"{this.name} was killed.");
             Destroy(this.gameObject);
@@ -31,7 +38,7 @@ namespace EntitySystem
         {
             var delta = Time.deltaTime;
             var steeringStrength = 0f;
-            Vector2 steeringDirection = ((Vector2)(e.gameObject.transform.position - this.transform.position)).normalized; // Direction towards
+            Vector2 steeringDirection = ((Vector2) (e.gameObject.transform.position - this.transform.position)).normalized; // Direction towards
 
             switch (e.type) // Set steering base values, direction and Mood changing depending on type
             {
@@ -51,7 +58,7 @@ namespace EntitySystem
                         _transitionMatrix.BoostState(Mood.Afraid, +distInfo.HighDistanceFraction * 3 * delta);
                         _transitionMatrix.BoostState(Mood.AntiCrowdy, +distInfo.LowDistanceFraction * delta * 3);
                         _transitionMatrix.BoostState(Mood.Crowdy, +distInfo.HighDistanceFraction * delta * 0.5f);
-                        
+
                         steeringDirection *= -1;
                         steeringStrength += settings.human_deadHuman_steeringStrengthBase * distInfo.HighDistanceFraction;
                     }
@@ -96,7 +103,7 @@ namespace EntitySystem
                     if (distInfo.IsCollision) steeringStrength += settings.human_visualOnly_steeringStrengthCollision;
                     break;
             }
-            
+
             switch (state) // Apply steering factors depending on Mood
             {
                 case Mood.Chilling:
@@ -114,9 +121,8 @@ namespace EntitySystem
                 case Mood.Afraid:
                     steeringStrength *= settings.human_afraid_steeringStrengthMult;
                     break;
-
             }
-            
+
             // Steer
             steeringStrength = Mathf.Max(0, steeringStrength);
             InfluenceDirection(steeringDirection, steeringStrength * delta);
@@ -148,7 +154,7 @@ namespace EntitySystem
         {
             //throw new System.NotImplementedException();
         }
-        
+
         protected override void OnUpdateSpeed(float oldSpeed, float newSpeed)
         {
             //throw new System.NotImplementedException();
