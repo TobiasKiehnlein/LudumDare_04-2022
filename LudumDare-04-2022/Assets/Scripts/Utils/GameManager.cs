@@ -76,13 +76,23 @@ public class GameManager : MonoBehaviour
         Score += _data.Values.Where(d => d.DeathTime == null).Select(_ => Time.deltaTime).Sum() * scoreScale;
     }
 
-    public void RegisterDeath(int instanceId)
+    private IEnumerator ResetTimeScaleAfter(float duration)
     {
+        yield return new WaitForSeconds(duration);
+        Time.timeScale = 1;
+    }
+
+    public void RegisterDeath(GameObject instance)
+    {
+        var instanceId = instance.GetInstanceID();
         if (_firstDeath)
         {
             AudioManager.Instance.StartSound(Music.Minor1);
-            //TODO trigger bullet time and camera zoom
+            Time.timeScale = .3f;
+            FindObjectOfType<CameraControl>()?.OverridePositions(new[] {instance.transform.position});
+            FindObjectOfType<VolumeHandler>()?.SetInfluence(1);
             _firstDeath = false;
+            StartCoroutine(ResetTimeScaleAfter(3));
         }
         else
         {

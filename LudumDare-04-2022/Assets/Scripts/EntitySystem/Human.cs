@@ -69,7 +69,7 @@ namespace EntitySystem
 
         protected override void OnDeath()
         {
-            GameManager.Instance.RegisterDeath(gameObject.GetInstanceID());
+            GameManager.Instance.RegisterDeath(gameObject);
             Debug.Log($"{this.name} was killed.");
             Animator.SetTrigger(AnimationDeathTriggerName);
             lastDeathTimeout = Time.time;
