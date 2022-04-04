@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,10 +8,10 @@ namespace RayWallSystem
     public class GlobalItemHandler : MonoBehaviour
     {
         [SerializeField] private float timeInSeconds = 1f;
-        [SerializeField] private GameObject defaultPrefab;
 
         public static GlobalItemHandler Instance { get; private set; }
-        [HideInInspector] public GameObject prefab;
+        [HideInInspector] [NonSerialized] public GameObject prefab = null;
+        public GameObject initialPrefab;
         public IHandleInstantiation HandleInstantiation;
 
         private void Awake()
@@ -29,9 +30,11 @@ namespace RayWallSystem
         // Update is called once per frame
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && HandleInstantiation != null && HandleInstantiation.ClickAllowed())
             {
-                var instance = Instantiate(prefab != null ? prefab : defaultPrefab);
+                var activePrefab = prefab != null ? prefab : initialPrefab;
+                if (activePrefab == null) return;
+                var instance = Instantiate(activePrefab);
                 var rayWall = instance.GetComponent<RayWall>();
                 if (rayWall != null)
                     rayWall.timeInSeconds = timeInSeconds;

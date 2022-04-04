@@ -64,4 +64,9 @@ public class ItemHandler : MonoBehaviour, IHandleInstantiation
         currentAmount--;
         _timeUntilIncrement = Math.Min(_timeUntilIncrement, reloadTimeInSeconds);
     }
+
+    public bool ClickAllowed()
+    {
+        return currentAmount > 0;
+    }
 }
