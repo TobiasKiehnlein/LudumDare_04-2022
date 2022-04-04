@@ -7,6 +7,9 @@ namespace EntitySystem
 {
     public class DistanceHandler : MonoBehaviour
     {
+        private const float Interval = .3f;
+        private float last = 0;
+
         public static DistanceHandler Instance { get; private set; } = null;
 
         private QuadMatrix _distanceMatrix;
@@ -27,15 +30,18 @@ namespace EntitySystem
 
         private void Update()
         {
-            if (Instance != this) return;
-            for (int i = 0; i < _entities.Count; i++)
+            if (last < Time.time - Interval)
             {
-                for (int j = i; j < _entities.Count; j++)
+                last = Time.time;
+                for (var i = 0; i < _entities.Count; i++)
                 {
-                    var distance = Vector2.Distance(_entities[i].gameObject.transform.position,
-                        _entities[j].gameObject.transform.position);
-                    _distanceMatrix.Set(i, j, distance);
-                    _distanceMatrix.Set(j, i, distance);
+                    for (var j = i; j < _entities.Count; j++)
+                    {
+                        var distance = Vector2.Distance(_entities[i].gameObject.transform.position,
+                            _entities[j].gameObject.transform.position);
+                        _distanceMatrix.Set(i, j, distance);
+                        _distanceMatrix.Set(j, i, distance);
+                    }
                 }
             }
         }
@@ -48,14 +54,14 @@ namespace EntitySystem
 
         public void UnRegister(Entity e)
         {
-            int index = GetEntityIndex(e);
+            var index = GetEntityIndex(e);
             _entities.RemoveAt(index);
             _distanceMatrix.Remove(index);
         }
 
         public Dictionary<Entity, float> GetDistancesFor(Entity e)
         {
-            int index = GetEntityIndex(e);
+            var index = GetEntityIndex(e);
             var distances = _distanceMatrix.GetRow(index);
             Debug.Assert(distances.Count == _entities.Count, "Distances and registered entities do not match");
             return Enumerable.Range(0, _entities.Count).ToDictionary(i => _entities[i], i => distances[i]);
