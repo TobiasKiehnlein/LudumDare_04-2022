@@ -154,7 +154,7 @@ namespace EntitySystem
 
         protected override void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)
         {
-            base.OnUpdateDirection(oldDirection, newDirection);
+            UpdateMirror();
             var angle = Mathf.Asin(newDirection.y);
             const float pi8 = Mathf.PI / 8;
             var stateInt = 0;

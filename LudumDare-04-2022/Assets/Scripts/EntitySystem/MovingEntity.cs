@@ -62,9 +62,9 @@ namespace EntitySystem
         {
         }
 
-        protected virtual void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)
+        protected void UpdateMirror()
         {
-            if (newDirection.x < 0)
+            if (Direction.x < 0)
             {
                 spriteContainer.transform.localScale = MirrorScale;
             }
@@ -74,6 +74,7 @@ namespace EntitySystem
             }
         }
 
+        protected abstract void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection);
         protected abstract void OnUpdateSpeed(float oldSpeed, float newSpeed);
 
         // Amount should contain time.deltatime

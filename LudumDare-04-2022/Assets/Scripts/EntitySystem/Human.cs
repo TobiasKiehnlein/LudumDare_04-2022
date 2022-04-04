@@ -1,11 +1,15 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using Utils;
 using WallSystem;
 
 namespace EntitySystem
 {
     public class Human : MovingEntity<Human.Mood>
     {
+        private float lastDeathTimeout = 0;
+
         [Serializable]
         public enum Mood
         {
@@ -14,6 +18,21 @@ namespace EntitySystem
             AntiCrowdy,
             Jogging,
             Afraid,
+        }
+        
+        private const string AnimationDeathTriggerName = "Death";
+        private const string AnimationStateName = "State";
+        public enum AnimationState
+        {
+            Stand,
+            Walk,
+        }
+        
+        public bool isSideways()
+        {
+            if (Dead) return false;
+            if (Speed > settings.human_walkAnimationThreshold) return true;
+            return false;
         }
 
         public Human() : base(Type.Human, Mood.Chilling)
@@ -26,12 +45,34 @@ namespace EntitySystem
             GameManager.Instance.RegisterHuman(gameObject.GetInstanceID());
         }
 
+        protected override void Update()
+        {
+            base.Update();
+            if (isSideways()) UpdateMirror();
+            else
+            {
+                if (mirrored) spriteContainer.transform.localScale = MirrorScale;
+                else spriteContainer.transform.localScale = Vector3.one;
+            }
+
+            if (Dead)
+            {
+                if (lastDeathTimeout < Time.time - settings.human_deathTimeout) Destroy(this.gameObject);
+                else if (lastDeathTimeout < Time.time - settings.human_deathMoveTimeout)
+                {
+                    var pos = gameObject.transform.position;
+                    var newZ = Mathf.Lerp(pos.z, 4, Time.deltaTime * 10);
+                    this.gameObject.transform.position = new Vector3(pos.x, pos.y, newZ);
+                }
+            }
+        }
+
         protected override void OnDeath()
         {
             GameManager.Instance.RegisterDeath(gameObject.GetInstanceID());
-            //throw new NotImplementedException();
             Debug.Log($"{this.name} was killed.");
-            Destroy(this.gameObject);
+            Animator.SetTrigger(AnimationDeathTriggerName);
+            lastDeathTimeout = Time.time;
         }
 
         protected override void HandleNearbyEntity(Entity e, DistanceInformation distInfo)
@@ -152,12 +193,13 @@ namespace EntitySystem
 
         protected override void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)
         {
-            //throw new System.NotImplementedException();
+            // Not used, Mirror is updated in Update()
         }
 
         protected override void OnUpdateSpeed(float oldSpeed, float newSpeed)
         {
-            //throw new System.NotImplementedException();
+            if (newSpeed > settings.human_walkAnimationThreshold) Animator.SetInteger(AnimationStateName, AnimationState.Walk.ToInt());
+            else Animator.SetInteger(AnimationStateName, AnimationState.Stand.ToInt());
         }
 
         protected override void OnWallHit(Wall w)

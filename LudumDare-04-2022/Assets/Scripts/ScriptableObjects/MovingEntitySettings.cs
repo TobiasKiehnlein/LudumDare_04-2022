@@ -37,6 +37,10 @@ namespace ScriptableObjects
             Afraid,
         */
         // ReSharper disable InconsistentNaming
+
+        [SerializeField] public float human_walkAnimationThreshold = 1;
+        [SerializeField] public float human_deathMoveTimeout = 9;
+        [SerializeField] public float human_deathTimeout = 10;
         
         // TargetSpeed
         [SerializeField] public float human_chilling_targetSpeed = 0;
