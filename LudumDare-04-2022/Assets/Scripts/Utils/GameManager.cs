@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     private float _lastSpawn;
     private bool _firstDeath = true;
 
+    private Canvas _gameOverScreen;
+
     public float Score { get; private set; }
 
     private readonly Dictionary<int, HumanInfo> _data = new();
@@ -48,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _gameOverScreen = FindObjectOfType<GameOverCanvas>().GetComponent<Canvas>();
+        _gameOverScreen.enabled = false;
         _spawnLocationsPeople = FindObjectsOfType<PlayerSpawnPoint>().Select(point => point.gameObject.transform).ToList();
         _spawnLocationsDeaths = FindObjectsOfType<DeathSpawnPoint>().Select(point => point.gameObject.transform).ToList();
         _lastSpawn = -0.5f * deathSpawnRateInSeconds;
@@ -104,6 +108,17 @@ public class GameManager : MonoBehaviour
         }
 
         _data[instanceId] = new HumanInfo {SpawnTime = _data[instanceId].SpawnTime, DeathTime = Time.time};
+
+        if (_data.Values.All(x => x.DeathTime != null))
+        {
+            // Game Over
+            var currentHighScore = PlayerPrefs.GetFloat("HighScore", 0);
+            PlayerPrefs.SetFloat("HighScore", Math.Max(currentHighScore, Score));
+            PlayerPrefs.Save();
+
+            Debug.Log($"HighScore: {PlayerPrefs.GetFloat("HighScore")}");
+            _gameOverScreen.enabled = true;
+        }
     }
 
     public void RegisterHuman(int instanceId)
