@@ -2,9 +2,9 @@
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "MovingEntitySettings", menuName = "CustomGameSettings/MovingEntitySettings",
+    [CreateAssetMenu(fileName = "EntitySettings", menuName = "CustomGameSettings/EntitySettings",
         order = 0)]
-    public class MovingEntitySettings : ScriptableObject
+    public class EntitySettings : ScriptableObject
     {
         // General
         [SerializeField] public int maxHitcount = 5;

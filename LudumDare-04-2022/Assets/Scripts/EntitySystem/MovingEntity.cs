@@ -9,7 +9,6 @@ namespace EntitySystem
 {
     public abstract class MovingEntity<TS> : Entity where TS : Enum
     {
-        [SerializeField] protected MovingEntitySettings settings;
         [SerializeField] private float startingSpeed = 0;
         [SerializeField] public float speedAdjustSpeed = 1;
         [SerializeField] public TS state;
@@ -173,6 +172,8 @@ namespace EntitySystem
 
         protected override void Start()
         {
+            handleNearby = true;
+            
             if (settings == null)
             {
                 Debug.LogError($"Entity {this.name} has not settings set.");

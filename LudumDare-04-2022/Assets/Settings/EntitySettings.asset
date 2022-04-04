@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7805208fff9747e8a87305e23c507f75, type: 3}
-  m_Name: MovingEntitySettings
+  m_Name: EntitySettings
   m_EditorClassIdentifier: 
   maxHitcount: 5
   minMoveDistance: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   steeringMultiplier: 1
   debugDrawDuration: 5
   human_walkAnimationThreshold: 3
-  human_deathMoveTimeout: 9
+  human_deathMoveTimeout: 7
   human_deathTimeout: 10
   human_chilling_targetSpeed: 0
   human_crowdy_targetSpeed: 2

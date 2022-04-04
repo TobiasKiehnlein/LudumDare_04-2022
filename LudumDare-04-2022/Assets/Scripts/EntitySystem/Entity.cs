@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using ScriptableObjects;
 using UnityEngine;
 using Utils;
 
@@ -7,6 +8,7 @@ namespace EntitySystem
 {
     public abstract class Entity : MonoBehaviour
     {
+        [SerializeField] protected EntitySettings settings;
         [SerializeField] protected GameObject spriteContainer;
         [SerializeField] protected bool handleNearby = false;
         [SerializeField] protected bool mirrored = false;

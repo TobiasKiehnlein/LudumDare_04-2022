@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
 using WallSystem;
@@ -61,7 +60,7 @@ namespace EntitySystem
                 else if (lastDeathTimeout < Time.time - settings.human_deathMoveTimeout)
                 {
                     var pos = gameObject.transform.position;
-                    var newZ = Mathf.Lerp(pos.z, 4, Time.deltaTime * 10);
+                    var newZ = Mathf.Lerp(pos.z, 4, Time.deltaTime * 0.5f);
                     this.gameObject.transform.position = new Vector3(pos.x, pos.y, newZ);
                 }
             }
@@ -69,10 +68,10 @@ namespace EntitySystem
 
         protected override void OnDeath()
         {
-            GameManager.Instance.RegisterDeath(gameObject);
             Debug.Log($"{this.name} was killed.");
             Animator.SetTrigger(AnimationDeathTriggerName);
             lastDeathTimeout = Time.time;
+            GameManager.Instance.RegisterDeath(gameObject);
         }
 
         protected override void HandleNearbyEntity(Entity e, DistanceInformation distInfo)
