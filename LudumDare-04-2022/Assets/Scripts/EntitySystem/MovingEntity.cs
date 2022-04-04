@@ -7,13 +7,20 @@ using Random = UnityEngine.Random;
 
 namespace EntitySystem
 {
-    public abstract class MovingEntity : Entity
+    public abstract class MovingEntity<TS> : Entity where TS : Enum
     {
         [SerializeField] protected MovingEntitySettings settings;
         [SerializeField] private float startingSpeed = 0;
         [SerializeField] public float speedAdjustSpeed = 1;
+        [SerializeField] public TS state;
+
+        protected readonly TransitionMatrix<TS> _transitionMatrix = new TransitionMatrix<TS>();
         public float unityReportSpeed = 0; // only reports to editor
         public float unityReportTargetSpeed = 0; // only reports to editor
+
+        public static readonly Vector3 MirrorVector = new Vector3(-1, 1, 1);
+
+        protected Animator Animator { get; private set; }
 
         private float _stateUpdateCooldownRemaining;
         private float _wallHitDirectionCooldownRemaining = 0;
@@ -43,16 +50,33 @@ namespace EntitySystem
         public float Speed
         {
             get { return _speed; }
-            private set { _speed = Mathf.Abs(value); }
+            private set
+            {
+                var oldSpeed = _speed;
+                _speed = Mathf.Abs(value);
+                OnUpdateSpeed(oldSpeed, _speed);
+            }
         }
 
         private float _speed;
 
-        public MovingEntity(Type t) : base(t)
+        public MovingEntity(Type t, TS startState) : base(t)
         {
         }
 
-        protected abstract void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection);
+        protected virtual void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)
+        {
+            if (newDirection.x < 0)
+            {
+                spriteContainer.transform.localScale = MirrorVector;
+            }
+            else
+            {
+                spriteContainer.transform.localScale = Vector3.one;
+            }
+        }
+
+        protected abstract void OnUpdateSpeed(float oldSpeed, float newSpeed);
 
         // Amount should contain time.deltatime
         public void InfluenceDirection(Vector2 direction, float amount)
@@ -66,6 +90,12 @@ namespace EntitySystem
         public void InfluenceSpeed(float amount)
         {
             Speed += amount;
+        }
+        
+        // Sets the speed directly, but does not modify the target speed
+        public void MultiplySpeed(float factor)
+        {
+            Speed *= factor;
         }
 
         // When this is called the Direction has already been updated
@@ -151,13 +181,32 @@ namespace EntitySystem
                 return;
             }
 
+            Animator = GetComponentInChildren<Animator>();
+            if (Animator == null)
+            {
+                Debug.LogWarning($"MovingEntity {this.name} has no Animator.");
+            }
+
             base.Start();
             Direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
             TargetSpeed = startingSpeed;
             _stateUpdateCooldownRemaining = settings.stateUpdateCooldown;
         }
 
-        protected abstract void UpdateState();
+        protected void UpdateState()
+        {
+            _transitionMatrix.ReduceMultipliers(settings.stateUpdateCooldown * settings.stateMultiplierReductionSpeed);
+            state = _transitionMatrix.GetNextState(state);
+            UpdateSpeed();
+        }
+
+        protected void UpdateState(TS overrideState)
+        {
+            state = overrideState;
+            UpdateSpeed();
+        }
+
+        protected abstract void UpdateSpeed();
 
         protected override void Update()
         {

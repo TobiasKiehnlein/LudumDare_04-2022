@@ -78,21 +78,31 @@ namespace EntitySystem
                 SetWeight(Death.Mood.Normal, Death.Mood.Aggressive, 5);
                 SetWeight(Death.Mood.Normal, Death.Mood.KillingSpree, 1);
                 SetWeight(Death.Mood.Normal, Death.Mood.Starving, 3);
+                SetWeight(Death.Mood.Normal, Death.Mood.Killing, 0);
             
                 SetWeight(Death.Mood.Aggressive, Death.Mood.Normal, 8);
                 SetWeight(Death.Mood.Aggressive, Death.Mood.Aggressive, 10);
                 SetWeight(Death.Mood.Aggressive, Death.Mood.KillingSpree, 5);
                 SetWeight(Death.Mood.Aggressive, Death.Mood.Starving, 8);
+                SetWeight(Death.Mood.Aggressive, Death.Mood.Killing, 0);
             
                 SetWeight(Death.Mood.KillingSpree, Death.Mood.Normal, 10);
                 SetWeight(Death.Mood.KillingSpree, Death.Mood.Aggressive, 3);
                 SetWeight(Death.Mood.KillingSpree, Death.Mood.KillingSpree, 8);
                 SetWeight(Death.Mood.KillingSpree, Death.Mood.Starving, 0.5f);
+                SetWeight(Death.Mood.KillingSpree, Death.Mood.Killing, 0);
             
                 SetWeight(Death.Mood.Starving, Death.Mood.Normal, 5);
                 SetWeight(Death.Mood.Starving, Death.Mood.Aggressive, 15);
                 SetWeight(Death.Mood.Starving, Death.Mood.KillingSpree, 1);
                 SetWeight(Death.Mood.Starving, Death.Mood.Starving, 10);
+                SetWeight(Death.Mood.Starving, Death.Mood.Killing, 0);
+                
+                SetWeight(Death.Mood.Killing, Death.Mood.Normal, 0);
+                SetWeight(Death.Mood.Killing, Death.Mood.Aggressive, 0);
+                SetWeight(Death.Mood.Killing, Death.Mood.KillingSpree, 0);
+                SetWeight(Death.Mood.Killing, Death.Mood.Starving, 0);
+                SetWeight(Death.Mood.Killing, Death.Mood.Killing, 1); // Death is set back to other state via override
             }
         }
 

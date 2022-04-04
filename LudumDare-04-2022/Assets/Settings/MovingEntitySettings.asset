@@ -15,9 +15,56 @@ MonoBehaviour:
   maxHitcount: 5
   minMoveDistance: 0
   maxMoveDistance: 10
-  wallCollisionDistance: 0.2
+  wallCollisionDistance: 0.5
   stateMultiplierReductionSpeed: 0.1
   stateUpdateCooldown: 5
   wallHitDirectionCooldown: 0.25
   steeringMultiplier: 1
   debugDrawDuration: 5
+  human_chilling_targetSpeed: 0
+  human_crowdy_targetSpeed: 2
+  human_antiCrowdy_targetSpeed: 4
+  human_jogging_targetSpeed: 10
+  human_afraid_targetSpeed: 15
+  human_chilling_wallSpeedInfluence: 0
+  human_crowdy_wallSpeedInfluence: 0
+  human_antiCrowdy_wallSpeedInfluence: 5
+  human_jogging_wallSpeedInfluence: -5
+  human_afraid_wallSpeedInfluence: -15
+  human_death_steeringStrengthBase: 0.7
+  human_human_steeringStrengthBase: 0.5
+  human_human_steeringStrengthCollision: 1
+  human_deadHuman_steeringStrengthBase: 0.5
+  human_cross_steeringStrengthBase: 0.5
+  human_totem_steeringStrengthBase: 0.3
+  human_totem_steeringStrengthCollision: 2
+  human_obstacle_steeringStrengthBase: 0.2
+  human_visualOnly_steeringStrengthBase: 0.1
+  human_visualOnly_steeringStrengthCollision: 0.7
+  human_chilling_steeringStrengthMult: 0
+  human_crowdy_steeringStrengthMult: 1.5
+  human_antiCrowdy_steeringStrengthMult: 1.2
+  human_jogging_steeringStrengthMult: 0.1
+  human_afraid_steeringStrengthMult: 0.01
+  death_normal_targetSpeed: 10
+  death_aggressive_targetSpeed: 13
+  death_killingSpree_targetSpeed: 5
+  death_Starving_targetSpeed: 20
+  death_normal_wallSpeedInfluence: 5
+  death_aggressive_wallSpeedInfluence: 10
+  death_killingSpree_wallSpeedInfluence: -10
+  death_Starving_wallSpeedInfluence: 15
+  death_death_steeringStrengthBase: 0.2
+  death_death_steeringStrengthCollision: 1
+  death_human_steeringStrengthBase: 0.5
+  death_deadHuman_steeringStrengthBase: 1
+  death_cross_steeringStrengthBase: 0.5
+  death_cross_steeringStrengthCollision: 2
+  death_totem_steeringStrengthBase: 0.3
+  death_obstacle_steeringStrengthBase: 0.2
+  death_visualOnly_steeringStrengthBase: 0.1
+  death_visualOnly_steeringStrengthCollision: 0.7
+  death_normal_steeringStrengthMult: 1
+  death_aggressive_steeringStrengthMult: 1.2
+  death_killingSpree_steeringStrengthMult: 0.1
+  death_Starving_steeringStrengthMult: 1.8

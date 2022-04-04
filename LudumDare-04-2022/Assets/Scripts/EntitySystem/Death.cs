@@ -1,15 +1,15 @@
 ﻿using System;
+using UnityEditor.Animations;
 using UnityEngine;
+using Utils;
 using WallSystem;
 
 namespace EntitySystem
 {
-    public class Death : MovingEntity
+    public class Death : MovingEntity<Death.Mood>
     {
-        [SerializeField] public Mood state = Mood.Normal;
-
-        private TransitionMatrix<Mood> _transitionMatrix = new TransitionMatrix<Mood>();
-
+        private float _lastKillTime = 0;
+        
         [Serializable]
         public enum Mood
         {
@@ -17,9 +17,21 @@ namespace EntitySystem
             Aggressive,
             KillingSpree,
             Starving,
+            Killing
         }
 
-        public Death() : base(Type.Death)
+        private const string AnimationSliceTriggerName = "Slice";
+        private const string AnimationStateName = "State";
+        public enum AnimationState
+        {
+            Front,
+            Back,
+            Side,
+            SideFront,
+            SideBack,
+        }
+
+        public Death() : base(Type.Death, Mood.Normal)
         {
         }
 
@@ -32,7 +44,8 @@ namespace EntitySystem
         {
             var delta = Time.deltaTime;
             var steeringStrength = 0f;
-            Vector2 steeringDirection = ((Vector2)(e.gameObject.transform.position - this.transform.position)).normalized; // Direction towards
+            Vector2 steeringDirection =
+                ((Vector2) (e.gameObject.transform.position - this.transform.position)).normalized; // Direction towards
 
             switch (e.type) // Set steering base values, direction and Mood changing depending on type
             {
@@ -52,20 +65,18 @@ namespace EntitySystem
                     {
                         _transitionMatrix.BoostState(Mood.KillingSpree, +distInfo.HighDistanceFraction * 3 * delta);
                         _transitionMatrix.BoostState(Mood.Starving, -distInfo.MedDistanceFraction * delta * 3);
-                        
-                        steeringStrength += settings.death_deadHuman_steeringStrengthBase * distInfo.LowDistanceFraction;
+
+                        steeringStrength +=
+                            settings.death_deadHuman_steeringStrengthBase * distInfo.LowDistanceFraction;
                     }
                     else
                     {
                         _transitionMatrix.BoostState(Mood.Normal, +distInfo.MedDistanceFraction * delta * 0.1f);
-                        steeringStrength += settings.death_deadHuman_steeringStrengthBase * distInfo.MedDistanceFraction;
+                        steeringStrength +=
+                            settings.death_deadHuman_steeringStrengthBase * distInfo.MedDistanceFraction;
                         if (distInfo.IsCollision)
                         {
-                            //if (noKillCooldown)
-                            _transitionMatrix.BoostState(Mood.Starving, -1); // no delta
-                            _transitionMatrix.BoostState(Mood.Aggressive, -1); // no delta
-                            _transitionMatrix.BoostState(Mood.KillingSpree, +1); // no delta
-                            // TODO: Kill Human
+                            Slice(e);
                         }
                     }
 
@@ -80,6 +91,7 @@ namespace EntitySystem
                         _transitionMatrix.BoostState(Mood.Starving, +distInfo.LowDistanceFraction * delta * 2);
                         steeringStrength += settings.death_cross_steeringStrengthCollision;
                     }
+
                     break;
                 case Type.Totem:
                     _transitionMatrix.BoostState(Mood.Normal, +distInfo.MedDistanceFraction * delta);
@@ -99,7 +111,7 @@ namespace EntitySystem
                     if (distInfo.IsCollision) steeringStrength += settings.death_visualOnly_steeringStrengthCollision;
                     break;
             }
-            
+
             switch (state) // Apply steering factors depending on Mood
             {
                 case Mood.Normal:
@@ -114,17 +126,64 @@ namespace EntitySystem
                 case Mood.Starving:
                     steeringStrength *= settings.death_Starving_steeringStrengthMult;
                     break;
-
             }
-            
+
             // Steer
             steeringStrength = Mathf.Max(0, steeringStrength);
             InfluenceDirection(steeringDirection, steeringStrength * delta);
         }
 
+        private void Slice(Entity e)
+        {
+            if (_lastKillTime > Time.time - settings.death_killCooldown) return;
+            
+            handleNearby = false;
+            UpdateState(Mood.Killing);
+            var entityPos = e.gameObject.transform.position;
+            var targetPos = new Vector2(entityPos.x, entityPos.y - 0.5f);
+            var targetDirection = (targetPos - (Vector2)this.transform.position).normalized;
+            InfluenceDirection(targetDirection, 10);
+            MultiplySpeed(0.05f);
+            _transitionMatrix.BoostState(Mood.Starving, -1); // no delta
+            _transitionMatrix.BoostState(Mood.Aggressive, -1); // no delta
+            _transitionMatrix.BoostState(Mood.KillingSpree, +3); // no delta
+            Animator.SetTrigger(AnimationSliceTriggerName);
+            e.Kill();
+            _lastKillTime = Time.time;
+        }
+
         protected override void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)
         {
-            //throw new System.NotImplementedException();
+            base.OnUpdateDirection(oldDirection, newDirection);
+            var angle = Mathf.Asin(newDirection.y);
+            const float pi8 = Mathf.PI / 8;
+            var stateInt = 0;
+            if (angle > pi8 * 3) // Upward
+            {
+                stateInt = AnimationState.Back.ToInt();
+            }
+            else if (angle > pi8) // Upward-Side
+            {
+                stateInt = AnimationState.SideBack.ToInt();
+            }
+            else if (angle > -pi8) // Side
+            {
+                stateInt = AnimationState.Side.ToInt();
+            }
+            else if (angle > -pi8 * 3) // Downward-Side
+            {
+                stateInt = AnimationState.SideFront.ToInt();
+            }
+            else // Downward
+            {
+                stateInt = AnimationState.Front.ToInt();
+            }
+            Animator.SetInteger(AnimationStateName, stateInt);
+        }
+
+        protected override void OnUpdateSpeed(float oldSpeed, float newSpeed)
+        {
+            // Not needed
         }
 
         protected override void OnWallHit(Wall w)
@@ -146,10 +205,18 @@ namespace EntitySystem
             }
         }
 
-        protected override void UpdateState()
+        protected override void Update()
         {
-            _transitionMatrix.ReduceMultipliers(settings.stateUpdateCooldown * settings.stateMultiplierReductionSpeed);
-            state = _transitionMatrix.GetNextState(state);
+            base.Update();
+            if (_lastKillTime < Time.time - settings.death_killCooldown)
+            {
+                handleNearby = true;
+                if (state == Mood.Killing) UpdateState(Mood.KillingSpree);
+            }
+        }
+
+        protected override void UpdateSpeed()
+        {
             switch (state)
             {
                 case Mood.Normal:
@@ -163,6 +230,9 @@ namespace EntitySystem
                     break;
                 case Mood.Starving:
                     TargetSpeed = settings.death_Starving_targetSpeed;
+                    break;
+                case Mood.Killing:
+                    TargetSpeed = settings.death_Killing_targetSpeed;
                     break;
             }
         }

@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8221240016801987092}
   - component: {fileID: 8221240016801987095}
-  - component: {fileID: 87213647}
+  - component: {fileID: 8306965199742825066}
   m_Layer: 7
   m_Name: DeathSprite
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8221240016801987093}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -159,7 +159,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -507493963, guid: 968085c3172dcf540bf2f8051828405b, type: 3}
+  m_Sprite: {fileID: 1516484878, guid: 53bb71f8ef3d494478f8553e7407b291, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &87213647
+--- !u!95 &8306965199742825066
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0

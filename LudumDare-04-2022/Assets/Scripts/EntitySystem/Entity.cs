@@ -7,16 +7,16 @@ namespace EntitySystem
 {
     public abstract class Entity : MonoBehaviour
     {
-        [SerializeField] private GameObject spriteContainer;
-        [SerializeField] private bool handleNearby = false;
+        [SerializeField] protected GameObject spriteContainer;
+        [SerializeField] protected bool handleNearby = false;
         private float _lastNearbyUpdate = 0;
         private DistanceHandler.DistanceInformation[] _distanceInformations = null;
 
         protected const float NearbyRadius = 15f;
-        protected const float HighDistance = NearbyRadius - 5f;
+        protected const float HighDistance = NearbyRadius - 2f;
         protected const float MedDistance = HighDistance / 2f;
         protected const float LowDistance = 5f;
-        protected const float CollisionDistance = 1f;
+        protected const float CollisionDistance = 2f;
         public readonly Type type;
 
         public Entity(Type t)

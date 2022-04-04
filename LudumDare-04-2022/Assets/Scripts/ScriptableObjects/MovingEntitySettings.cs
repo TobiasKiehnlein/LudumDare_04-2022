@@ -81,12 +81,15 @@ namespace ScriptableObjects
             Starving,
         */
         // ReSharper disable InconsistentNaming
+
+        [SerializeField] public float death_killCooldown = 2f;
         
         // TargetSpeed
         [SerializeField] public float death_normal_targetSpeed = 10;
         [SerializeField] public float death_aggressive_targetSpeed = 13;
         [SerializeField] public float death_killingSpree_targetSpeed = 5;
         [SerializeField] public float death_Starving_targetSpeed = 20;
+        [SerializeField] public float death_Killing_targetSpeed = 0.25f;
         
         // Wall speed influence
         [SerializeField] public float death_normal_wallSpeedInfluence = +5;

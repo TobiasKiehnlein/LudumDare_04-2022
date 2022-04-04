@@ -4,12 +4,8 @@ using WallSystem;
 
 namespace EntitySystem
 {
-    public class Human : MovingEntity
+    public class Human : MovingEntity<Human.Mood>
     {
-        [SerializeField] public Mood state = Mood.Chilling;
-
-        private TransitionMatrix<Mood> _transitionMatrix = new TransitionMatrix<Mood>();
-
         [Serializable]
         public enum Mood
         {
@@ -20,13 +16,14 @@ namespace EntitySystem
             Afraid,
         }
 
-        public Human() : base(Type.Human)
+        public Human() : base(Type.Human, Mood.Chilling)
         {
         }
 
         protected override void OnDeath()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            Debug.Log($"{this.name} was killed.");
         }
 
         protected override void HandleNearbyEntity(Entity e, DistanceInformation distInfo)
@@ -124,10 +121,8 @@ namespace EntitySystem
             InfluenceDirection(steeringDirection, steeringStrength * delta);
         }
 
-        protected override void UpdateState()
+        protected override void UpdateSpeed()
         {
-            _transitionMatrix.ReduceMultipliers(settings.stateUpdateCooldown * settings.stateMultiplierReductionSpeed);
-            state = _transitionMatrix.GetNextState(state);
             switch (state)
             {
                 case Mood.Chilling:
@@ -149,6 +144,11 @@ namespace EntitySystem
         }
 
         protected override void OnUpdateDirection(Vector2 oldDirection, Vector2 newDirection)
+        {
+            //throw new System.NotImplementedException();
+        }
+        
+        protected override void OnUpdateSpeed(float oldSpeed, float newSpeed)
         {
             //throw new System.NotImplementedException();
         }
