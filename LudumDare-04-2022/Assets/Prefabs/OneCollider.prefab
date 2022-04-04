@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2696609257634449957}
   - component: {fileID: 2696609257634449954}
   - component: {fileID: 2696609257634449955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2696609257634449952}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 6
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -1001,8 +1001,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.5972576
-          value: 0.93274176
+          time: 0.9256922
+          value: 0.73003745
           inSlope: -1.4066411
           outSlope: -1.4066411
           tangentMode: 0
@@ -4873,7 +4873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4866157144124392987}
   - component: {fileID: 1843763362331548490}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OneCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

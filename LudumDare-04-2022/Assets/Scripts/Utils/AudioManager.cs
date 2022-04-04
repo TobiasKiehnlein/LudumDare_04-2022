@@ -55,6 +55,16 @@ namespace Utils
                 source.mute = muted;
             }
         }
+        
+        public void SetMusicVolume(float vol)
+        {
+            gameSettings.MusicVolume = vol;
+        }
+        
+        public void SetSfxVolume(float vol)
+        {
+            gameSettings.SfxVolume = vol;
+        }
 
         public void StartSound(Sfx sfx)
         {

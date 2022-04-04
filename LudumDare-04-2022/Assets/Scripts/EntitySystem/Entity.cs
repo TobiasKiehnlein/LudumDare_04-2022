@@ -12,7 +12,7 @@ namespace EntitySystem
         private float _lastNearbyUpdate = 0;
         private DistanceHandler.DistanceInformation[] _distanceInformations = null;
 
-        protected const float NearbyRadius = 30f;
+        protected const float NearbyRadius = 15f;
         protected const float HighDistance = NearbyRadius - 5f;
         protected const float MedDistance = HighDistance / 2f;
         protected const float LowDistance = 5f;
