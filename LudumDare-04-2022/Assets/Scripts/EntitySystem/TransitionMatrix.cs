@@ -8,14 +8,13 @@ namespace EntitySystem
 {
     public class TransitionMatrix<T> where T : Enum
     {
-        private readonly int entries;
         private Matrix _baseMatrix;
         private float[] _multipliers;
         private const float MaxMultiplier = 3.0f;
 
         public TransitionMatrix()
         {
-            entries = Enum.GetValues(typeof(T)).Length;
+            var entries = Enum.GetValues(typeof(T)).Length;
             _baseMatrix = new QuadMatrix(entries, 1);
             _multipliers = Enumerable.Repeat(1f, entries).ToArray();
             Debug.Assert(_baseMatrix.N == _multipliers.Length);

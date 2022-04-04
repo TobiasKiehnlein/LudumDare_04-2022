@@ -74,7 +74,42 @@ namespace ScriptableObjects
         // 
         
         // Death
+        /*
+            Normal,
+            Aggressive,
+            KillingSpree,
+            Starving,
+        */
         // ReSharper disable InconsistentNaming
-        //[SerializeField] public float death_wallSpeedInfluence = +5;
+        
+        // TargetSpeed
+        [SerializeField] public float death_normal_targetSpeed = 10;
+        [SerializeField] public float death_aggressive_targetSpeed = 13;
+        [SerializeField] public float death_killingSpree_targetSpeed = 5;
+        [SerializeField] public float death_Starving_targetSpeed = 20;
+        
+        // Wall speed influence
+        [SerializeField] public float death_normal_wallSpeedInfluence = +5;
+        [SerializeField] public float death_aggressive_wallSpeedInfluence = +10;
+        [SerializeField] public float death_killingSpree_wallSpeedInfluence = -10;
+        [SerializeField] public float death_Starving_wallSpeedInfluence = +15;
+        
+        // Steering strength base
+        [SerializeField] public float death_death_steeringStrengthBase = 0.2f;
+        [SerializeField] public float death_death_steeringStrengthCollision = 1f;
+        [SerializeField] public float death_human_steeringStrengthBase = 0.5f;
+        [SerializeField] public float death_deadHuman_steeringStrengthBase = 1f;
+        [SerializeField] public float death_cross_steeringStrengthBase = 0.5f;
+        [SerializeField] public float death_cross_steeringStrengthCollision = 2;
+        [SerializeField] public float death_totem_steeringStrengthBase = 0.3f;
+        [SerializeField] public float death_obstacle_steeringStrengthBase = 0.2f;
+        [SerializeField] public float death_visualOnly_steeringStrengthBase = 0.1f;
+        [SerializeField] public float death_visualOnly_steeringStrengthCollision = 0.7f;
+        
+        // Steering strength mult
+        [SerializeField] public float death_normal_steeringStrengthMult = 1;
+        [SerializeField] public float death_aggressive_steeringStrengthMult = 1.2f;
+        [SerializeField] public float death_killingSpree_steeringStrengthMult = 0.1f;
+        [SerializeField] public float death_Starving_steeringStrengthMult = 1.8f;
     }
 }

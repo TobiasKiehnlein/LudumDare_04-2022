@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Utils;
 using WallSystem;
-using Random = UnityEngine.Random;
 
 namespace EntitySystem
 {
@@ -61,6 +59,7 @@ namespace EntitySystem
 
         protected override void OnDeath()
         {
+            throw new NotImplementedException();
         }
 
         protected override void HandleNearbyEntity(Entity e, DistanceInformation distInfo)
@@ -75,7 +74,7 @@ namespace EntitySystem
                     _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta);
                     if (distInfo.IsCollision)
                     {
-                        _transitionMatrix.BoostState(Mood.Afraid, +distInfo.HighDistanceFraction * delta * 5);
+                        _transitionMatrix.BoostState(Mood.Afraid, +distInfo.LowDistanceFraction * delta * 5);
                     }
 
                     steeringDirection *= -1;
