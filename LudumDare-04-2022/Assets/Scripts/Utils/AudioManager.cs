@@ -78,9 +78,9 @@ namespace Utils
             {
                 SfxHandler.Instance.TriggerSfx(sfx);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Debug.LogWarning($"The audio {sfx} couldn't be played");
+                Debug.LogWarning($"The audio {sfx} couldn't be played: {e.Message}");
             }
         }
 

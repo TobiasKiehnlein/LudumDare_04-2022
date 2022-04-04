@@ -60,7 +60,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc8db373baf4140b2a90a14a2702afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxClips: []
+  sfxClips:
+  - Name: TutorialText
+    sfx: 0
+    Clip: {fileID: 8300000, guid: 9786b7c39288bee4598bdf24caae87b4, type: 3}
+    shouldLoop: 0
   mixerGroup: {fileID: 676529090207579372, guid: e925a568b40a7cb43babfb322bac6460, type: 2}
 --- !u!114 &1874838817
 MonoBehaviour:

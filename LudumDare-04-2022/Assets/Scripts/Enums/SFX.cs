@@ -2,10 +2,6 @@
 {
     public enum Sfx
     {
-        FootSteps,
-        DirtySiren,
-        Hit,
-        HugeSlap,
         TutorialText
     }
 

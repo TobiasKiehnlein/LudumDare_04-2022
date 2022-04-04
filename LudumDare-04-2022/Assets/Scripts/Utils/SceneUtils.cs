@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading.Tasks;
+using Enums;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ namespace Utils
 
         public void LoadNextScene()
         {
+            AudioManager.Instance.StopSound(Sfx.TutorialText);
             var scene = SceneManager.GetActiveScene();
             var nextLevelBuildIndex = (scene.buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
             StartCoroutine(LoadScene(nextLevelBuildIndex));
