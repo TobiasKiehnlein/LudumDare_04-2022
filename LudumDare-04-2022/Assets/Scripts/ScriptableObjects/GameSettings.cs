@@ -6,7 +6,7 @@ namespace ScriptableObjects
     public class GameSettings : ScriptableObject
     {
         [SerializeField] private float musicVolume = .6f;
-        [SerializeField] private float sfxVolume = .8f;
+        [SerializeField] private float sfxVolume = 1f;
 
         public float MusicVolume
         {
@@ -29,10 +29,11 @@ namespace ScriptableObjects
                 PlayerPrefs.Save();
             }
         }
+
         private void OnEnable()
         {
-            musicVolume = PlayerPrefs.HasKey("MusicVolume") ? PlayerPrefs.GetFloat("MusicVolume") : 1;
-            sfxVolume = PlayerPrefs.HasKey("SfxVolume") ? PlayerPrefs.GetFloat("SfxVolume") : 1;
+            musicVolume = PlayerPrefs.GetFloat("MusicVolume", .7f);
+            sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 1);
         }
     }
 }
