@@ -18,6 +18,9 @@ namespace ScriptableObjects
 
         [SerializeField] public float debugDrawDuration = 5f;
 
+        [SerializeField] public float totemDuration = 10f;
+        [SerializeField] public float crossDuration = 8f;
+
         // Types
         /*
             Death,
@@ -87,6 +90,7 @@ namespace ScriptableObjects
         // ReSharper disable InconsistentNaming
 
         [SerializeField] public float death_killCooldown = 2f;
+        [SerializeField] public float death_spawnCooldown = 5f;
         
         // TargetSpeed
         [SerializeField] public float death_normal_targetSpeed = 10;

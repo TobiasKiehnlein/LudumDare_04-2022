@@ -1,8 +1,8 @@
 using System;
-using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace EntitySystem
 {
@@ -145,8 +145,14 @@ namespace EntitySystem
                     _distanceInformations = DistanceHandler.Instance.GetDistancesFor(this);
                 }
 
-                foreach (var info in _distanceInformations)
+                var nearbyCount = _distanceInformations.Length;
+                var sqrtCount = (int)Mathf.Sqrt(nearbyCount);
+                var startIndex = Random.Range(0, sqrtCount);
+
+                for (int i = startIndex; i < _distanceInformations.Length; ++i)
                 {
+                    if (i % sqrtCount != startIndex) continue;
+                    var info = _distanceInformations[i];
                     if (info.Entity != null && info.Distance <= NearbyRadius && info.Entity != this)
                     {
                         this.HandleNearbyEntity(info.Entity, new DistanceInformation(info.Distance));

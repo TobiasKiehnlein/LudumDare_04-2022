@@ -2847,7 +2847,7 @@ PrefabInstance:
     - target: {fileID: 6244387526285723346, guid: da45408efab2ea441ab5de156a7032ae, type: 3}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5760488364229280399, guid: 6786bfdc30b97814891fe4173a46ee4e, type: 3}
     - target: {fileID: 6244387526285723346, guid: da45408efab2ea441ab5de156a7032ae, type: 3}
       propertyPath: activeSprite
       value: 
@@ -5330,7 +5330,7 @@ PrefabInstance:
     - target: {fileID: 6244387526285723346, guid: da45408efab2ea441ab5de156a7032ae, type: 3}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 8221240015855524631, guid: 3ad7b3b5a9a4c4645bae1b00ccd7501d, type: 3}
+      objectReference: {fileID: 3474065242328819076, guid: c41ab91deae0462488d97ed5b87086f7, type: 3}
     - target: {fileID: 6244387526285723346, guid: da45408efab2ea441ab5de156a7032ae, type: 3}
       propertyPath: activeSprite
       value: 

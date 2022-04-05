@@ -8,6 +8,7 @@ namespace EntitySystem
     public class Death : MovingEntity<Death.Mood>
     {
         private float _lastKillTime = 0;
+        private float _spawnTime;
         
         [Serializable]
         public enum Mood
@@ -204,9 +205,22 @@ namespace EntitySystem
             }
         }
 
+        protected override void Start()
+        {
+            base.Start();
+            _spawnTime = Time.time;
+            handleNearby = false;
+            move = false;
+        }
+
         protected override void Update()
         {
             base.Update();
+            if (_spawnTime < Time.time - settings.death_spawnCooldown)
+            {
+                handleNearby = true;
+                move = true;
+            }
             if (_lastKillTime < Time.time - settings.death_killCooldown)
             {
                 handleNearby = true;

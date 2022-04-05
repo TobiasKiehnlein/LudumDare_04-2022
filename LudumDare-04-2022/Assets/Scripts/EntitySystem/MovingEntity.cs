@@ -12,6 +12,7 @@ namespace EntitySystem
         [SerializeField] private float startingSpeed = 0;
         [SerializeField] public float speedAdjustSpeed = 1;
         [SerializeField] public TS state;
+        [SerializeField] public bool move = true;
 
         protected readonly TransitionMatrix<TS> _transitionMatrix = new TransitionMatrix<TS>();
         public float unityReportSpeed = 0; // only reports to editor
@@ -103,6 +104,8 @@ namespace EntitySystem
         // Uses direction and speed to update the position of the gameobject, including Wall detection
         private void UpdatePosition()
         {
+            if (!move) return;
+            
             float distance; // The distance to move in this frame
             float hitDeltaTime = 0; // The time at which the Wall is hit
             RaycastHit2D? lastHit = null;
