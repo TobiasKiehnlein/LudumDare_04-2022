@@ -71,32 +71,32 @@ jobs:
           name: Build-${{ matrix.platform.targetPlatform }}
           path: build/${{ matrix.platform.targetPlatform }}
           if-no-files-found: error
-  deploy:
-    name: Deploy - Itch.io ${{ matrix.channel.targetPlatform }}
-    needs: buildForAllSupportedPlatforms
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        channel:
-          # - deploymentPlatform: webgl
-          #   targetPlatform: WebGL # name of the target platform in the build job
-          - deploymentPlatform: linux
-            targetPlatform: StandaloneLinux64
-          - deploymentPlatform: windows
-            targetPlatform: StandaloneWindows64
-          - deploymentPlatform: mac
-            targetPlatform: StandaloneOSX
-    steps:
-      - uses: actions/download-artifact@v2.0.8
-        with:
-          name: Build-${{ matrix.channel.targetPlatform }}
-          path: build/${{ matrix.channel.targetPlatform }}
-      - uses: KikimoraGames/itch-publish@v0.0.3
-        with:
-          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./build/${{ matrix.channel.targetPlatform }}
-          itchUsername: ${{env.ITCH_USERNAME}}
-          itchGameId: ${{ env.ITCH_GAME_ID }}
-          buildChannel: ${{ matrix.channel.deploymentPlatform }}
-          buildNumber: ${{ needs.version.outputs.version_hash }}
+  # deploy:
+  #   name: Deploy - Itch.io ${{ matrix.channel.targetPlatform }}
+  #   needs: buildForAllSupportedPlatforms
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       channel:
+  #         # - deploymentPlatform: webgl
+  #         #   targetPlatform: WebGL # name of the target platform in the build job
+  #         - deploymentPlatform: linux
+  #           targetPlatform: StandaloneLinux64
+  #         - deploymentPlatform: windows
+  #           targetPlatform: StandaloneWindows64
+  #         - deploymentPlatform: mac
+  #           targetPlatform: StandaloneOSX
+  #   steps:
+  #     - uses: actions/download-artifact@v2.0.8
+  #       with:
+  #         name: Build-${{ matrix.channel.targetPlatform }}
+  #         path: build/${{ matrix.channel.targetPlatform }}
+  #     - uses: KikimoraGames/itch-publish@v0.0.3
+  #       with:
+  #         butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+  #         gameData: ./build/${{ matrix.channel.targetPlatform }}
+  #         itchUsername: ${{env.ITCH_USERNAME}}
+  #         itchGameId: ${{ env.ITCH_GAME_ID }}
+  #         buildChannel: ${{ matrix.channel.deploymentPlatform }}
+  #         buildNumber: ${{ needs.version.outputs.version_hash }}
