@@ -51,6 +51,7 @@ namespace EntitySystem
             {
                 case Type.Death:
                     _transitionMatrix.BoostState(Mood.KillingSpree, +distInfo.HighDistanceFraction * delta * 0.5f);
+                    _transitionMatrix.BoostState(Mood.Starving, +distInfo.MedDistanceFraction * delta * 0.5f);
                     if (distInfo.IsLowDistance)
                     {
                         _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 2);
@@ -82,22 +83,21 @@ namespace EntitySystem
 
                     break;
                 case Type.Cross:
-                    _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.MedDistanceFraction * delta * 2);
-                    _transitionMatrix.BoostState(Mood.Starving, +distInfo.LowDistanceFraction * delta);
+                    _transitionMatrix.BoostState(Mood.Normal, +distInfo.MedDistanceFraction * delta * 2);
                     steeringDirection *= -1;
                     steeringStrength += settings.death_cross_steeringStrengthBase * distInfo.MedDistanceFraction;
                     if (distInfo.IsCollision)
                     {
-                        _transitionMatrix.BoostState(Mood.Starving, +distInfo.LowDistanceFraction * delta * 2);
+                        _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 2);
                         steeringStrength += settings.death_cross_steeringStrengthCollision;
                     }
-
+                    InfluenceSpeed(5 * Time.deltaTime);
                     break;
                 case Type.Totem:
-                    _transitionMatrix.BoostState(Mood.Normal, +distInfo.MedDistanceFraction * delta);
-                    _transitionMatrix.BoostState(Mood.Aggressive, -distInfo.LowDistanceFraction * delta * 2);
-                    _transitionMatrix.BoostState(Mood.KillingSpree, +distInfo.LowDistanceFraction * delta * 0.5f);
+                    _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 2);
+                    _transitionMatrix.BoostState(Mood.Starving, +distInfo.LowDistanceFraction * delta * 0.5f);
                     steeringStrength += settings.death_totem_steeringStrengthBase;
+                    InfluenceSpeed(5 * Time.deltaTime);
                     break;
                 case Type.Obstacle:
                     _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 0.05f);
@@ -218,13 +218,13 @@ namespace EntitySystem
             base.Update();
             if (_spawnTime < Time.time - settings.death_spawnCooldown)
             {
-                handleNearby = true;
                 move = true;
-            }
-            if (_lastKillTime < Time.time - settings.death_killCooldown)
-            {
-                handleNearby = true;
-                if (state == Mood.Killing) UpdateState(Mood.KillingSpree);
+                
+                if (_lastKillTime < Time.time - settings.death_killCooldown)
+                {
+                    handleNearby = true;
+                    if (state == Mood.Killing) UpdateState(Mood.KillingSpree);
+                }
             }
         }
 

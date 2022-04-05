@@ -43,33 +43,33 @@ namespace EntitySystem
             {
                 SetWeight(Human.Mood.Chilling, Human.Mood.Chilling, 20);
                 SetWeight(Human.Mood.Chilling, Human.Mood.Crowdy, 2);
-                SetWeight(Human.Mood.Chilling, Human.Mood.AntiCrowdy, 3);
+                SetWeight(Human.Mood.Chilling, Human.Mood.AntiCrowdy, 5);
                 SetWeight(Human.Mood.Chilling, Human.Mood.Jogging, 1);
                 SetWeight(Human.Mood.Chilling, Human.Mood.Afraid, 0.5f);
 
                 SetWeight(Human.Mood.Crowdy, Human.Mood.Chilling, 5);
                 SetWeight(Human.Mood.Crowdy, Human.Mood.Crowdy, 20);
                 SetWeight(Human.Mood.Crowdy, Human.Mood.AntiCrowdy, 5);
-                SetWeight(Human.Mood.Crowdy, Human.Mood.Jogging, 2);
+                SetWeight(Human.Mood.Crowdy, Human.Mood.Jogging, 3);
                 SetWeight(Human.Mood.Crowdy, Human.Mood.Afraid, 0.1f);
 
                 SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Chilling, 4);
                 SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Crowdy, 1);
                 SetWeight(Human.Mood.AntiCrowdy, Human.Mood.AntiCrowdy, 10);
-                SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Jogging, 6);
+                SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Jogging, 7);
                 SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Afraid, 1);
 
                 SetWeight(Human.Mood.Jogging, Human.Mood.Chilling, 4);
-                SetWeight(Human.Mood.Jogging, Human.Mood.Crowdy, 4);
+                SetWeight(Human.Mood.Jogging, Human.Mood.Crowdy, 5);
                 SetWeight(Human.Mood.Jogging, Human.Mood.AntiCrowdy, 1);
                 SetWeight(Human.Mood.Jogging, Human.Mood.Jogging, 20);
                 SetWeight(Human.Mood.Jogging, Human.Mood.Afraid, 0.5f);
 
                 SetWeight(Human.Mood.Afraid, Human.Mood.Chilling, 1);
-                SetWeight(Human.Mood.Afraid, Human.Mood.Crowdy, 5);
-                SetWeight(Human.Mood.Afraid, Human.Mood.AntiCrowdy, 2);
-                SetWeight(Human.Mood.Afraid, Human.Mood.Jogging, 6);
-                SetWeight(Human.Mood.Afraid, Human.Mood.Afraid, 15);
+                SetWeight(Human.Mood.Afraid, Human.Mood.Crowdy, 2);
+                SetWeight(Human.Mood.Afraid, Human.Mood.AntiCrowdy, 5);
+                SetWeight(Human.Mood.Afraid, Human.Mood.Jogging, 7);
+                SetWeight(Human.Mood.Afraid, Human.Mood.Afraid, 20);
             }
 
             private void SetupDeath()
@@ -94,7 +94,7 @@ namespace EntitySystem
             
                 SetWeight(Death.Mood.Starving, Death.Mood.Normal, 5);
                 SetWeight(Death.Mood.Starving, Death.Mood.Aggressive, 15);
-                SetWeight(Death.Mood.Starving, Death.Mood.KillingSpree, 1);
+                SetWeight(Death.Mood.Starving, Death.Mood.KillingSpree, 3);
                 SetWeight(Death.Mood.Starving, Death.Mood.Starving, 10);
                 SetWeight(Death.Mood.Starving, Death.Mood.Killing, 0);
                 

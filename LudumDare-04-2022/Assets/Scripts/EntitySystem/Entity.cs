@@ -17,11 +17,11 @@ namespace EntitySystem
         private DistanceHandler.DistanceInformation[] _distanceInformations = null;
         public static readonly Vector3 MirrorScale = new Vector3(-1, 1, 1);
 
-        protected const float NearbyRadius = 15f;
-        protected const float HighDistance = NearbyRadius - 2f;
+        protected const float NearbyRadius = 30f;
+        protected const float HighDistance = NearbyRadius - 5f;
         protected const float MedDistance = HighDistance / 2f;
         protected const float LowDistance = 5f;
-        protected const float CollisionDistance = 2f;
+        protected const float CollisionDistance = 2.5f;
         public readonly Type type;
 
         private static int _entityMask = -1;
@@ -146,13 +146,13 @@ namespace EntitySystem
                     _distanceInformations = DistanceHandler.Instance.GetDistancesFor(this);
                 }
 
-                var nearbyCount = _distanceInformations.Length;
-                var sqrtCount = (int)Mathf.Sqrt(nearbyCount);
-                var startIndex = Random.Range(0, sqrtCount);
+                //var nearbyCount = _distanceInformations.Length;
+                //var sqrtCount = (int)Mathf.Sqrt(nearbyCount);
+                //var startIndex = Random.Range(0, sqrtCount);
 
-                for (int i = startIndex; i < _distanceInformations.Length; ++i)
+                for (int i = 0; i < _distanceInformations.Length; ++i)
                 {
-                    if (i % sqrtCount != startIndex) continue;
+                    //if (i % sqrtCount != startIndex) continue;
                     var info = _distanceInformations[i];
                     if (info.Entity != null && info.Distance <= NearbyRadius && info.Entity != this)
                     {

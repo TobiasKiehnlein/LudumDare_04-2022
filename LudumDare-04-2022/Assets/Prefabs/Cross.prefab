@@ -165,6 +165,8 @@ MonoBehaviour:
   startHeight: 3
   endHeight: 0
   speed: 1
+  destroyGameObject: 0
+  manualTrigger: 0
 --- !u!114 &3474065242328819077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,3 +183,4 @@ MonoBehaviour:
   spriteContainer: {fileID: 3474065240779306563}
   handleNearby: 0
   mirrored: 0
+  adjustOrientation: 1
