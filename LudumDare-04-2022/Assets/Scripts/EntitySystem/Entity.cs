@@ -12,6 +12,7 @@ namespace EntitySystem
         [SerializeField] protected GameObject spriteContainer;
         [SerializeField] protected bool handleNearby = false;
         [SerializeField] protected bool mirrored = false;
+        [SerializeField] protected bool adjustOrientation = true;
         private float _lastNearbyUpdate = 0;
         private DistanceHandler.DistanceInformation[] _distanceInformations = null;
         public static readonly Vector3 MirrorScale = new Vector3(-1, 1, 1);
@@ -22,7 +23,7 @@ namespace EntitySystem
         protected const float LowDistance = 5f;
         protected const float CollisionDistance = 2f;
         public readonly Type type;
-        
+
         private static int _entityMask = -1;
         public bool Dead { get; private set; } = false;
 
@@ -135,7 +136,7 @@ namespace EntitySystem
 
         protected virtual void Update()
         {
-            spriteContainer.transform.up = CameraObject.transform.forward;
+            if (adjustOrientation) spriteContainer.transform.up = CameraObject.transform.forward;
             var lastUpdate = DistanceHandler.Instance.LastUpdate;
             if (!Dead && handleNearby)
             {

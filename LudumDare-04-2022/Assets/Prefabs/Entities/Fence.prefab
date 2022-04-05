@@ -161,6 +161,7 @@ MonoBehaviour:
   spriteContainer: {fileID: 8055708018266182342}
   handleNearby: 0
   mirrored: 0
+  adjustOrientation: 0
 --- !u!114 &8099095561449802749
 MonoBehaviour:
   m_ObjectHideFlags: 0
