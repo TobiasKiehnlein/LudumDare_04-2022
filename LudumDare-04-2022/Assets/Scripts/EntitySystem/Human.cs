@@ -91,21 +91,24 @@ namespace EntitySystem
             switch (e.type) // Set steering base values, direction and Mood changing depending on type
             {
                 case Type.Death:
-                    _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta);
+                    _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta * 2);
+                    _transitionMatrix.BoostState(Mood.Chilling, -distInfo.HighDistanceFraction * delta);
                     if (distInfo.IsCollision)
                     {
                         _transitionMatrix.BoostState(Mood.Afraid, +distInfo.LowDistanceFraction * delta * 5);
                     }
 
                     steeringDirection *= -1;
-                    steeringStrength += settings.human_death_steeringStrengthBase * distInfo.MedDistanceFraction;
+                    steeringStrength += settings.human_death_steeringStrengthBase * distInfo.LowDistanceFraction;
                     break;
                 case Type.Human:
                     if (e.Dead)
                     {
-                        _transitionMatrix.BoostState(Mood.Afraid, +distInfo.HighDistanceFraction * 5 * delta);
-                        _transitionMatrix.BoostState(Mood.AntiCrowdy, +distInfo.LowDistanceFraction * delta * 3);
-                        _transitionMatrix.BoostState(Mood.Crowdy, -distInfo.HighDistanceFraction * delta * 0.5f);
+                        _transitionMatrix.BoostState(Mood.Afraid, +distInfo.HighDistanceFraction * delta * 10);
+                        _transitionMatrix.BoostState(Mood.AntiCrowdy, +distInfo.MedDistanceFraction * delta * 3);
+                        _transitionMatrix.BoostState(Mood.Jogging, +distInfo.HighDistanceFraction * delta * 2);
+                        _transitionMatrix.BoostState(Mood.Crowdy, -distInfo.HighDistanceFraction * delta * 3);
+                        _transitionMatrix.BoostState(Mood.Chilling, -distInfo.MedDistanceFraction * delta * 5);
 
                         steeringDirection *= -1;
                         steeringStrength += settings.human_deadHuman_steeringStrengthBase * distInfo.HighDistanceFraction;
@@ -113,9 +116,9 @@ namespace EntitySystem
                     else
                     {
                         _transitionMatrix.BoostState(Mood.Crowdy, +distInfo.HighDistanceFraction * delta * 0.1f);
-                        _transitionMatrix.BoostState(Mood.Afraid, -distInfo.LowDistanceFraction * delta * 0.5f);
                         _transitionMatrix.BoostState(Mood.Chilling, +distInfo.LowDistanceFraction * delta * 0.5f);
                         _transitionMatrix.BoostState(Mood.AntiCrowdy, +distInfo.LowDistanceFraction * delta * 0.25f);
+                        _transitionMatrix.BoostState(Mood.Afraid, -distInfo.MedDistanceFraction * delta * 0.5f);
                         steeringStrength += settings.human_human_steeringStrengthBase;
                         if (distInfo.IsCollision)
                         {
@@ -129,19 +132,21 @@ namespace EntitySystem
 
                     break;
                 case Type.Cross:
-                    _transitionMatrix.BoostState(Mood.Afraid, -distInfo.MedDistanceFraction * delta * 2);
+                    _transitionMatrix.BoostState(Mood.Afraid, -distInfo.MedDistanceFraction * delta * 3);
                     _transitionMatrix.BoostState(Mood.Crowdy, +distInfo.HighDistanceFraction * delta * 2);
-                    steeringStrength += settings.human_cross_steeringStrengthBase;
-                    InfluenceSpeed(5 * Time.deltaTime);
+                    steeringStrength += settings.human_cross_steeringStrengthBase * distInfo.HighDistanceFraction;
                     break;
                 case Type.Totem:
-                    _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta);
+                    _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta * 2);
                     _transitionMatrix.BoostState(Mood.Jogging, +distInfo.LowDistanceFraction * delta * 3);
                     _transitionMatrix.BoostState(Mood.AntiCrowdy, +distInfo.HighDistanceFraction * delta);
                     steeringDirection *= -1;
-                    steeringStrength += settings.human_totem_steeringStrengthBase * distInfo.MedDistanceFraction;
-                    if (distInfo.IsCollision) steeringStrength += settings.human_totem_steeringStrengthCollision;
-                    InfluenceSpeed(5 * Time.deltaTime);
+                    steeringStrength += settings.human_totem_steeringStrengthBase * distInfo.HighDistanceFraction;
+                    if (distInfo.IsCollision)
+                    {
+	                    steeringStrength += settings.human_totem_steeringStrengthCollision;
+	                    _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta * 5);
+                    }
                     break;
                 case Type.Obstacle:
                     _transitionMatrix.BoostState(Mood.Chilling, +distInfo.LowDistanceFraction * delta * 0.5f);

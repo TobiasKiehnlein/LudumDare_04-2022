@@ -13,7 +13,7 @@
             throw new System.NotImplementedException();
         }
 
-        public Totem(Type t) : base(Type.Totem)
+        public Totem() : base(Type.Totem)
         {
         }
 

@@ -78,10 +78,23 @@ namespace EntitySystem
         protected abstract void OnUpdateSpeed(float oldSpeed, float newSpeed);
 
         // Amount should contain time.deltatime
-        public void InfluenceDirection(Vector2 direction, float amount)
+        public void InfluenceDirection(Vector2 targetDirection, float amount)
         {
-            if (_wallHitDirectionCooldownRemaining > 0) return;
-            Direction += direction.normalized * amount * settings.steeringMultiplier;
+	        if (_wallHitDirectionCooldownRemaining > 0) return;
+	        amount *= settings.steeringMultiplier;
+	        var angleBetween = Direction.SignedAngleTo(targetDirection);
+	        float newDirAngle;
+	        if (amount < Mathf.Abs(angleBetween))
+	        {
+		        newDirAngle = Direction.Angle();
+		        newDirAngle += Mathf.Sign(angleBetween) * amount;
+	        }
+	        else
+	        {
+		        newDirAngle = targetDirection.Angle();
+	        }
+
+	        Direction = newDirAngle.AsAngleToDirection();
         }
 
         // Amount should contain time.deltatime

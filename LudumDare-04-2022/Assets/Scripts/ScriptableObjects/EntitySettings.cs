@@ -6,7 +6,7 @@ namespace ScriptableObjects
         order = 0)]
     public class EntitySettings : ScriptableObject
     {
-        // General
+	    // General
         [SerializeField] public int maxHitcount = 5;
         [SerializeField] public float minMoveDistance = 0.0f; // Per update and iteration
         [SerializeField] public float maxMoveDistance = 10.000f; // Per update and iteration
@@ -15,12 +15,13 @@ namespace ScriptableObjects
         [SerializeField] public float stateUpdateCooldown = 3f;
         [SerializeField] public float wallHitDirectionCooldown = 0.25f;
         [SerializeField] public float steeringMultiplier = 0.1f;
-
-        [SerializeField] public float debugDrawDuration = 5f;
-
         [SerializeField] public float totemDuration = 10f;
         [SerializeField] public float crossDuration = 8f;
 
+        // Debug
+        [SerializeField] public float debugDrawDuration = 5f;
+        [SerializeField] public bool showRadius = true;
+        
         // Types
         /*
             Death,

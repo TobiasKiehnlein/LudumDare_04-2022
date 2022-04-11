@@ -5,7 +5,7 @@ namespace EntitySystem
 {
     public class Cross: Deployable
     {
-        public Cross(Type t) : base(Type.Cross)
+        public Cross() : base(Type.Cross)
         {
         }
 

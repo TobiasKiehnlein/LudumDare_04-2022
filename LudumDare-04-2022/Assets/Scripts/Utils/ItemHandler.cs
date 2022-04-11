@@ -1,89 +1,93 @@
 using System;
-using System.Globalization;
 using RayWallSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemHandler : MonoBehaviour, IHandleInstantiation
+namespace Utils
 {
-    [SerializeField] private bool isPreselected;
-    [SerializeField] private Sprite sprite;
-    [SerializeField] private Sprite activeSprite;
-    [SerializeField] private float reloadTimeInSeconds;
-    [SerializeField] private int maxAmount;
-    [SerializeField] [Range(0, 99)] private int currentAmount;
-    [SerializeField] private KeyCode associatedKey;
+	public class ItemHandler : MonoBehaviour, IHandleInstantiation
+	{
+		[SerializeField] private bool isPreselected;
+		[SerializeField] private Sprite sprite;
+		[SerializeField] private Sprite activeSprite;
+		[SerializeField] private float reloadTimeInSeconds;
+		[SerializeField] private int maxAmount;
+		[SerializeField] [Range(0, 99)] private int currentAmount;
+		[SerializeField] private KeyCode associatedKey;
 
-    [SerializeField] private GameObject spawnPrefab;
+		[SerializeField] private GameObject spawnPrefab;
 
-    private TMP_Text _text;
-    private Image _image;
-    private Slider _slider;
-    private float _timeUntilIncrement;
-    private Button _button;
+		private TMP_Text _text;
+		private Image _image;
+		private Slider _slider;
+		private float _timeUntilIncrement;
+		private Button _button;
 
-    private void Start()
-    {
-        _button = GetComponentInChildren<Button>();
-        _image = _button.gameObject.GetComponent<Image>();
-        _text = GetComponentInChildren<TMP_Text>();
-        _slider = GetComponentInChildren<Slider>();
+		private void Start()
+		{
+			_button = GetComponentInChildren<Button>();
+			_image = _button.gameObject.GetComponent<Image>();
+			_text = GetComponentInChildren<TMP_Text>();
+			_slider = GetComponentInChildren<Slider>();
 
-        _image.sprite = sprite;
+			_image.sprite = sprite;
 
-        if (isPreselected)
-        {
-            HandleClick();
-        }
-    }
+			if (isPreselected)
+			{
+				HandleClick();
+			}
 
-    private void Update()
-    {
-        _timeUntilIncrement -= Time.deltaTime;
-        if (_timeUntilIncrement < 0)
-        {
-            currentAmount++;
-            _timeUntilIncrement = maxAmount == currentAmount ? float.MaxValue : reloadTimeInSeconds;
-        }
+			_timeUntilIncrement = reloadTimeInSeconds;
+		}
 
-        if (Input.GetKeyDown(associatedKey))
-        {
-            ExecuteEvents.Execute(_button.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
-        }
+		private void Update()
+		{
+			_timeUntilIncrement -= Time.deltaTime;
+			if (_timeUntilIncrement < 0)
+			{
+				currentAmount++;
+				_timeUntilIncrement = maxAmount == currentAmount ? float.MaxValue : reloadTimeInSeconds;
+			}
 
-        _text.text = currentAmount.ToString();
-        _slider.value = 1 - _timeUntilIncrement / reloadTimeInSeconds;
-        _slider.gameObject.SetActive(currentAmount != maxAmount);
-    }
+			if (Input.GetKeyDown(associatedKey))
+			{
+				ExecuteEvents.Execute(_button.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+			}
 
-    public void HandleClick()
-    {
-        GlobalItemHandler.Instance.prefab = spawnPrefab;
-        GlobalItemHandler.Instance.HandleInstantiation = this;
-    }
+			_text.text = currentAmount.ToString();
+			_slider.value = 1 - _timeUntilIncrement / reloadTimeInSeconds;
+			_slider.gameObject.SetActive(currentAmount != maxAmount);
+		}
 
-    public void HandleInstantiation()
-    {
-        if (currentAmount <= 0) return;
+		public void HandleClick()
+		{
+			GlobalItemHandler.Instance.prefab = spawnPrefab;
+			GlobalItemHandler.Instance.HandleInstantiation = this;
+		}
 
-        currentAmount--;
-        _timeUntilIncrement = Math.Min(_timeUntilIncrement, reloadTimeInSeconds);
-    }
+		public void HandleInstantiation()
+		{
+			if (currentAmount <= 0) return;
 
-    public bool ClickAllowed()
-    {
-        return currentAmount > 0;
-    }
+			currentAmount--;
+			_timeUntilIncrement = Math.Min(_timeUntilIncrement, reloadTimeInSeconds);
+		}
 
-    public void Deactivate()
-    {
-        _image.sprite = sprite;
-    }
+		public bool ClickAllowed()
+		{
+			return currentAmount > 0;
+		}
 
-    public void Activate()
-    {
-        _image.sprite = activeSprite;
-    }
+		public void Deactivate()
+		{
+			_image.sprite = sprite;
+		}
+
+		public void Activate()
+		{
+			_image.sprite = activeSprite;
+		}
+	}
 }

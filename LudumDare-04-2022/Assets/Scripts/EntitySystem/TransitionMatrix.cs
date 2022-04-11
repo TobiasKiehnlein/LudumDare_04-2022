@@ -11,7 +11,7 @@ namespace EntitySystem
         private static readonly int Entries;
         private static readonly EnumMatrix BaseMatrix = null;
         private float[] _multipliers;
-        private const float MaxMultiplier = 3.0f;
+        private const float MaxMultiplier = 5.0f;
 
         private class EnumMatrix
         {
@@ -44,14 +44,14 @@ namespace EntitySystem
                 SetWeight(Human.Mood.Chilling, Human.Mood.Chilling, 20);
                 SetWeight(Human.Mood.Chilling, Human.Mood.Crowdy, 2);
                 SetWeight(Human.Mood.Chilling, Human.Mood.AntiCrowdy, 5);
-                SetWeight(Human.Mood.Chilling, Human.Mood.Jogging, 1);
-                SetWeight(Human.Mood.Chilling, Human.Mood.Afraid, 0.5f);
+                SetWeight(Human.Mood.Chilling, Human.Mood.Jogging, 2);
+                SetWeight(Human.Mood.Chilling, Human.Mood.Afraid, 1);
 
                 SetWeight(Human.Mood.Crowdy, Human.Mood.Chilling, 5);
                 SetWeight(Human.Mood.Crowdy, Human.Mood.Crowdy, 20);
                 SetWeight(Human.Mood.Crowdy, Human.Mood.AntiCrowdy, 5);
                 SetWeight(Human.Mood.Crowdy, Human.Mood.Jogging, 3);
-                SetWeight(Human.Mood.Crowdy, Human.Mood.Afraid, 0.1f);
+                SetWeight(Human.Mood.Crowdy, Human.Mood.Afraid, 1.5f);
 
                 SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Chilling, 4);
                 SetWeight(Human.Mood.AntiCrowdy, Human.Mood.Crowdy, 1);
@@ -62,8 +62,8 @@ namespace EntitySystem
                 SetWeight(Human.Mood.Jogging, Human.Mood.Chilling, 4);
                 SetWeight(Human.Mood.Jogging, Human.Mood.Crowdy, 5);
                 SetWeight(Human.Mood.Jogging, Human.Mood.AntiCrowdy, 1);
-                SetWeight(Human.Mood.Jogging, Human.Mood.Jogging, 20);
-                SetWeight(Human.Mood.Jogging, Human.Mood.Afraid, 0.5f);
+                SetWeight(Human.Mood.Jogging, Human.Mood.Jogging, 15);
+                SetWeight(Human.Mood.Jogging, Human.Mood.Afraid, 2);
 
                 SetWeight(Human.Mood.Afraid, Human.Mood.Chilling, 1);
                 SetWeight(Human.Mood.Afraid, Human.Mood.Crowdy, 2);

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
 using Utils;
@@ -136,28 +137,31 @@ namespace EntitySystem
 
         protected virtual void Update()
         {
-            if (adjustOrientation) spriteContainer.transform.up = CameraObject.transform.forward;
+            // if (adjustOrientation) spriteContainer.transform.up = CameraObject.transform.forward; Looks better without
             var lastUpdate = DistanceHandler.Instance.LastUpdate;
             if (!Dead && handleNearby)
             {
                 if (lastUpdate > _lastNearbyUpdate)
                 {
                     _lastNearbyUpdate = lastUpdate;
-                    _distanceInformations = DistanceHandler.Instance.GetDistancesFor(this);
+                    _distanceInformations = DistanceHandler.Instance.GetDistancesFor(this).Where(i => i.Distance <= NearbyRadius && i.Entity != this).ToArray();
                 }
 
-                //var nearbyCount = _distanceInformations.Length;
-                //var sqrtCount = (int)Mathf.Sqrt(nearbyCount);
-                //var startIndex = Random.Range(0, sqrtCount);
-
-                for (int i = 0; i < _distanceInformations.Length; ++i)
+                if (_distanceInformations.Length > 0)
                 {
-                    //if (i % sqrtCount != startIndex) continue;
-                    var info = _distanceInformations[i];
-                    if (info.Entity != null && info.Distance <= NearbyRadius && info.Entity != this)
-                    {
-                        this.HandleNearbyEntity(info.Entity, new DistanceInformation(info.Distance));
-                    }
+	                var nearbyCount = _distanceInformations.Length;
+	                var sqrtCount = Mathf.Ceil(Mathf.Sqrt(nearbyCount));
+	                var step = Mathf.CeilToInt(nearbyCount / sqrtCount);
+	                var startIndex = Random.Range(0, step);
+
+	                for (var i = startIndex; i < _distanceInformations.Length; i+=step)
+	                {
+		                var info = _distanceInformations[i];
+		                if (info.Entity != null)
+		                {
+			                this.HandleNearbyEntity(info.Entity, new DistanceInformation(info.Distance));
+		                }
+	                }
                 }
 
                 DebugDrawNearby();
@@ -166,6 +170,7 @@ namespace EntitySystem
 
         private void DebugDrawNearby()
         {
+	        if (!settings.showRadius) return;
             var pos = gameObject.transform.position;
             Debug.DrawRay(pos, Vector3.left * NearbyRadius, Color.blue);
             Debug.DrawRay(pos, Vector3.right * NearbyRadius, Color.blue);

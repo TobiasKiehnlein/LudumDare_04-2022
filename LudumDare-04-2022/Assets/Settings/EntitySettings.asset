@@ -16,41 +16,42 @@ MonoBehaviour:
   minMoveDistance: 0
   maxMoveDistance: 10
   wallCollisionDistance: 0.3
-  stateMultiplierReductionSpeed: 0.1
-  stateUpdateCooldown: 5
+  stateMultiplierReductionSpeed: 0.5
+  stateUpdateCooldown: 2
   wallHitDirectionCooldown: 0.25
-  steeringMultiplier: 3
-  debugDrawDuration: 2
+  steeringMultiplier: 0.3
   totemDuration: 10
   crossDuration: 8
-  human_walkAnimationThreshold: 2.5
+  debugDrawDuration: 2
+  showRadius: 0
+  human_walkAnimationThreshold: 2
   human_deathMoveTimeout: 7
   human_deathTimeout: 10
   human_chilling_targetSpeed: 0
   human_crowdy_targetSpeed: 2
   human_antiCrowdy_targetSpeed: 4
-  human_jogging_targetSpeed: 10
-  human_afraid_targetSpeed: 15
+  human_jogging_targetSpeed: 8
+  human_afraid_targetSpeed: 12
   human_chilling_wallSpeedInfluence: 0
   human_crowdy_wallSpeedInfluence: 0
   human_antiCrowdy_wallSpeedInfluence: 5
   human_jogging_wallSpeedInfluence: -5
   human_afraid_wallSpeedInfluence: -15
-  human_death_steeringStrengthBase: 2
+  human_death_steeringStrengthBase: 10
   human_human_steeringStrengthBase: 0.8
-  human_human_steeringStrengthCollision: 0.5
-  human_deadHuman_steeringStrengthBase: 10
-  human_cross_steeringStrengthBase: 15
-  human_totem_steeringStrengthBase: 15
-  human_totem_steeringStrengthCollision: 30
-  human_obstacle_steeringStrengthBase: 0.5
-  human_visualOnly_steeringStrengthBase: 0.3
-  human_visualOnly_steeringStrengthCollision: 1
-  human_chilling_steeringStrengthMult: 0
-  human_crowdy_steeringStrengthMult: 2.5
+  human_human_steeringStrengthCollision: 5
+  human_deadHuman_steeringStrengthBase: 30
+  human_cross_steeringStrengthBase: 25
+  human_totem_steeringStrengthBase: 20
+  human_totem_steeringStrengthCollision: 50
+  human_obstacle_steeringStrengthBase: 0.01
+  human_visualOnly_steeringStrengthBase: 0.01
+  human_visualOnly_steeringStrengthCollision: 0.5
+  human_chilling_steeringStrengthMult: 1
+  human_crowdy_steeringStrengthMult: 2
   human_antiCrowdy_steeringStrengthMult: 2
-  human_jogging_steeringStrengthMult: 0.1
-  human_afraid_steeringStrengthMult: 1
+  human_jogging_steeringStrengthMult: 1
+  human_afraid_steeringStrengthMult: 0.1
   death_killCooldown: 3
   death_spawnCooldown: 10
   death_normal_targetSpeed: 8
@@ -65,14 +66,14 @@ MonoBehaviour:
   death_death_steeringStrengthBase: 1
   death_death_steeringStrengthCollision: 5
   death_human_steeringStrengthBase: 0.5
-  death_deadHuman_steeringStrengthBase: 1
-  death_cross_steeringStrengthBase: 15
-  death_cross_steeringStrengthCollision: 30
-  death_totem_steeringStrengthBase: 15
+  death_deadHuman_steeringStrengthBase: 2
+  death_cross_steeringStrengthBase: 20
+  death_cross_steeringStrengthCollision: 50
+  death_totem_steeringStrengthBase: 25
   death_obstacle_steeringStrengthBase: 0.2
   death_visualOnly_steeringStrengthBase: 0.1
   death_visualOnly_steeringStrengthCollision: 0.7
   death_normal_steeringStrengthMult: 1
   death_aggressive_steeringStrengthMult: 1.2
   death_killingSpree_steeringStrengthMult: 0.1
-  death_Starving_steeringStrengthMult: 3
+  death_Starving_steeringStrengthMult: 4

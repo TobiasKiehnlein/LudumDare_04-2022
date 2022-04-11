@@ -85,19 +85,17 @@ namespace EntitySystem
                 case Type.Cross:
                     _transitionMatrix.BoostState(Mood.Normal, +distInfo.MedDistanceFraction * delta * 2);
                     steeringDirection *= -1;
-                    steeringStrength += settings.death_cross_steeringStrengthBase * distInfo.MedDistanceFraction;
+                    steeringStrength += settings.death_cross_steeringStrengthBase * distInfo.HighDistanceFraction;
                     if (distInfo.IsCollision)
                     {
                         _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 2);
                         steeringStrength += settings.death_cross_steeringStrengthCollision;
                     }
-                    InfluenceSpeed(5 * Time.deltaTime);
                     break;
                 case Type.Totem:
                     _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 2);
                     _transitionMatrix.BoostState(Mood.Starving, +distInfo.LowDistanceFraction * delta * 0.5f);
-                    steeringStrength += settings.death_totem_steeringStrengthBase;
-                    InfluenceSpeed(5 * Time.deltaTime);
+                    steeringStrength += settings.death_totem_steeringStrengthBase * distInfo.HighDistanceFraction;
                     break;
                 case Type.Obstacle:
                     _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 0.05f);
