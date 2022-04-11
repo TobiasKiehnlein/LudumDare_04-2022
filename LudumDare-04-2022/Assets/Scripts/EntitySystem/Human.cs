@@ -134,7 +134,7 @@ namespace EntitySystem
                 case Type.Cross:
                     _transitionMatrix.BoostState(Mood.Afraid, -distInfo.MedDistanceFraction * delta * 3);
                     _transitionMatrix.BoostState(Mood.Crowdy, +distInfo.HighDistanceFraction * delta * 2);
-                    steeringStrength += settings.human_cross_steeringStrengthBase * distInfo.HighDistanceFraction;
+                    steeringStrength += settings.human_cross_steeringStrengthBase;
                     break;
                 case Type.Totem:
                     _transitionMatrix.BoostState(Mood.Afraid, +distInfo.MedDistanceFraction * delta * 2);

@@ -95,7 +95,7 @@ namespace EntitySystem
                 case Type.Totem:
                     _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 2);
                     _transitionMatrix.BoostState(Mood.Starving, +distInfo.LowDistanceFraction * delta * 0.5f);
-                    steeringStrength += settings.death_totem_steeringStrengthBase * distInfo.HighDistanceFraction;
+                    steeringStrength += settings.death_totem_steeringStrengthBase;
                     break;
                 case Type.Obstacle:
                     _transitionMatrix.BoostState(Mood.Aggressive, +distInfo.LowDistanceFraction * delta * 0.05f);

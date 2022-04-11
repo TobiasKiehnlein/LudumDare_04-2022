@@ -11,6 +11,7 @@ public class SkullAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private Image _image;
     private bool _over;
+    private bool _down;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class SkullAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _image.sprite = hoverSprite;
+        _image.sprite = _down ? mouseDownSprite : hoverSprite;
         _over = true;
     }
 
@@ -35,10 +36,12 @@ public class SkullAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerDown(PointerEventData eventData)
     {
         _image.sprite = _over ? mouseDownSprite : defaultSprite;
+        _down = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         _image.sprite = _over ? hoverSprite : defaultSprite;
+        _down = false;
     }
 }

@@ -6,22 +6,25 @@ using Random = UnityEngine.Random;
 
 public class ShiftRandom : MonoBehaviour
 {
-    [SerializeField] private Vector3 direction;
-    [SerializeField] private float strength;
+	[SerializeField] private float strength;
+	[SerializeField] private Vector2 direction = Vector2.right;
     [SerializeField] private float speed;
-
-    private Vector3 _initialPosition;
+    
     private float _offset;
+    private Vector2 _initialPosition;
+    private RectTransform _transform;
 
     private void Start()
     {
-        _initialPosition = transform.position;
-        _offset = Random.value * 2 * (float) Math.PI - (float) Math.PI;
+	    _offset = Random.value * 2 * (float) Math.PI - (float) Math.PI;
+	    _transform = GetComponent<RectTransform>();
+	    _initialPosition = _transform.anchoredPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = _initialPosition + direction * (float) Math.Sin(Time.time * speed + _offset) * strength;
+        var newPos = _initialPosition + direction * (float) Math.Sin(Time.time * speed + _offset) * strength;
+        _transform.anchoredPosition = newPos;
     }
 }
